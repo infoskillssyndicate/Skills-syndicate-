@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Syndicate | Admin Control Room Matrix</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfc; }
+        #customAlert {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="text-slate-900 bg-slate-50">
+
+    <!-- Global Custom Alert Popup -->
+    <div id="customAlert" class="flex items-center p-4 max-w-sm rounded-xl shadow-xl border text-sm font-semibold">
+        <i id="alertIcon" class="fas mr-3 text-lg"></i>
+        <span id="alertMessage"></span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="bg-white border-b border-slate-100 sticky top-0 z-30 py-3 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE <span class="ml-2 text-xs font-bold bg-slate-900 text-white px-2 py-0.5 rounded">ULTIMATE ADMIN PANEL</span>
+            </h1>
+            <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-emerald-600 hover:underline"><i class="fas fa-external-link-alt mr-1"></i> Open Website</a>
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Column: Course Creator & Editor Form -->
+        <section class="lg:col-span-5 bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-fit">
+            <h2 id="formHeaderTitle" class="text-base font-extrabold text-slate-900 mb-4 border-b pb-2">
+                <i class="fas fa-plus-circle text-emerald-600 mr-2"></i>Upload Full Blueprint Data Object
+            </h2>
+            
+            <form id="courseForm" class="space-y-4">
+                
+                <div class="bg-slate-50 p-3 rounded-lg border space-y-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">1. Basic Information</p>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Course Title</label>
+                        <input type="text" id="title" required class="w-full text-xs p-2.5 border rounded bg-white focus:outline-emerald-600" placeholder="e.g., Next-Gen React.js Architecture">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Description</label>
+                        <textarea id="description" required rows="2" class="w-full text-xs p-2.5 border rounded bg-white focus:outline-emerald-600" placeholder="Deep-dive summary of this framework blueprint..."></textarea>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Sale Price (INR)</label>
+                            <input type="number" id="price" required class="w-full text-xs p-2.5 border rounded bg-white" placeholder="499">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Original Price (INR)</label>
+                            <input type="number" id="originalPrice" required class="w-full text-xs p-2.5 border rounded bg-white" placeholder="4999">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Course Rating Display</label>
+                        <input type="text" id="rating" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="4.9 ★ (2,340 ratings)">
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-lg border space-y-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">2. Assets & Streaming Nodes</p>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Thumbnail File (Optional if editing)</label>
+                        <input type="file" id="imageFile" accept="image/*" class="w-full text-xs p-2 border rounded bg-white file:text-xs file:font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Preview Video URL (YouTube/Vimeo)</label>
+                        <input type="url" id="videoUrl" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="https://www.youtube.com/watch?v=XYZ">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Premium PDF Resources Link</label>
+                        <input type="url" id="pdfUrl" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="Google Drive / Mega download URL">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Private Community Support Group Link</label>
+                        <input type="url" id="supportUrl" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="WhatsApp / Telegram Secret Invite Link">
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-lg border space-y-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">3. Instructor Profile Credentials</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Instructor Name</label>
+                            <input type="text" id="instructorName" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="e.g., Arjun Mehta">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Instructor Designation</label>
+                            <input type="text" id="instructorTitle" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="Ex-Google Senior Architect">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-lg border space-y-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">4. Deep Curriculum Data</p>
+                    <div class="grid grid-cols-3 gap-1.5">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Duration</label>
+                            <input type="text" id="duration" class="w-full text-xs p-2 border rounded bg-white" placeholder="18 Hours">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Level</label>
+                            <input type="text" id="level" class="w-full text-xs p-2 border rounded bg-white" placeholder="Advanced">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Category</label>
+                            <input type="text" id="category" class="w-full text-xs p-2 border rounded bg-white" placeholder="Engineering">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">What You'll Learn (Separate points with commas ',')</label>
+                        <textarea id="learnPoints" rows="2" class="w-full text-xs p-2.5 border rounded bg-white" placeholder="Custom Hooks Masterclass, Performance Tuning, Server side state hooks"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Dynamic Syllabus Modules (Format: Module Title | Lesson 1, Lesson 2)</label>
+                        <textarea id="syllabusText" rows="3" class="w-full text-xs p-2.5 border rounded bg-white font-mono" placeholder="Module 1: Foundations | State Machine Loops, Custom Architecture&#10;Module 2: Scaling | Memory Profiling, Render optimizations"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-slate-500 mb-1">Projects Built (Format: Project Name | Brief Description)</label>
+                        <textarea id="projectsText" rows="2" class="w-full text-xs p-2.5 border rounded bg-white font-mono" placeholder="Enterprise FinTech App | Full featured ledger architecture tracking operations.&#10;Crypto Dashboard | High fidelity charts mapping live tokens."></textarea>
+                    </div>
+                </div>
+
+                <div class="flex items-center p-2 bg-emerald-50 rounded-lg border border-emerald-100">
+                    <input type="checkbox" id="pinToTop" class="w-4 h-4 text-emerald-600 border-slate-300 rounded cursor-pointer">
+                    <label for="pinToTop" class="ml-2 block text-xs font-bold text-emerald-800 cursor-pointer select-none">Pin to Top 5 Displays</label>
+                </div>
+
+                <!-- Action Button Container -->
+                <div id="formActionContainer" class="flex flex-col gap-2">
+                    <button type="submit" id="submitFormButton" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition shadow cursor-pointer">
+                        <i class="fas fa-server mr-1"></i> Sync Complete Blueprint Model
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Right Column: Live Payment Queue & Course List Monitor -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- Live Payment Verification Queue Window -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-base font-extrabold text-slate-900 mb-4 border-b pb-2">
+                    <i class="fas fa-wallet text-emerald-600 mr-2"></i>Payment Verification Queue
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-[10px] font-bold uppercase text-slate-400 bg-slate-50">
+                                <th class="p-3">Student Context</th>
+                                <th class="p-3">Course Target</th>
+                                <th class="p-3">UTR Reference</th>
+                                <th class="p-3 text-center">Action Parameters</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminPaymentQueue" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="4" class="p-4 text-center text-slate-400">Booting secure settlement monitors...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Live Courses Master Database Dashboard -->
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <h2 class="text-base font-extrabold text-slate-900 mb-4 border-b pb-2">
+                    <i class="fas fa-database text-emerald-600 mr-2"></i>Live Monitor Dashboard
+                </h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-200 text-[10px] font-bold uppercase text-slate-400 bg-slate-50">
+                                <th class="p-3">Thumbnail</th>
+                                <th class="p-3">Course Specs & Title</th>
+                                <th class="p-3">Instructor</th>
+                                <th class="p-3">Priority</th>
+                                <th class="p-3 text-center">Action Matrix</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminCourseList" class="divide-y divide-slate-100">
+                            <tr>
+                                <td colspan="5" class="p-6 text-center text-slate-400">Booting database listeners stream...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- Core Firebase Engine Imports -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c",
+            measurementId: "G-DKXYCLX5NW"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let globalEditingCourseId = null; // Track if form is in Update/Edit mode
+        let currentExistingImageBase64 = ""; // Keep track of old image during editing
+
+        function showPopup(message, type = 'success') {
+            const alertBox = document.getElementById('customAlert');
+            const icon = document.getElementById('alertIcon');
+            const msgSpan = document.getElementById('alertMessage');
+            msgSpan.innerText = message;
+            if(type === 'success') {
+                alertBox.className = "flex items-center p-4 max-w-sm rounded-xl shadow-xl border text-sm font-semibold bg-emerald-50 text-emerald-800 border-emerald-200";
+                icon.className = "fas fa-check-circle mr-3 text-lg text-emerald-600";
+            } else {
+                alertBox.className = "flex items-center p-4 max-w-sm rounded-xl shadow-xl border text-sm font-semibold bg-red-50 text-red-800 border-red-200";
+                icon.className = "fas fa-exclamation-triangle mr-3 text-lg text-red-600";
+            }
+            alertBox.style.display = 'flex';
+            setTimeout(() => { alertBox.style.display = 'none'; }, 3500);
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        function parseSyllabus(text) {
+            if(!text.trim()) return [];
+            return text.split('\n').filter(line => line.includes('|')).map((line, idx) => {
+                const [mTitle, mLessons] = line.split('|');
+                return {
+                    id: "mod-" + Date.now() + "-" + idx,
+                    num: (idx + 1).toString(),
+                    title: mTitle.trim(),
+                    items: mLessons.split(',').map(item => item.trim()).filter(item => item !== "")
+                };
+            });
+        }
+
+        function parseProjects(text) {
+            if(!text.trim()) return [];
+            return text.split('\n').filter(line => line.includes('|')).map((line) => {
+                const [pTitle, pDesc] = line.split('|');
+                return {
+                    icon: "fas fa-cubes",
+                    title: pTitle.trim(),
+                    desc: pDesc.trim()
+                };
+            });
+        }
+
+        // --- SUBMIT CORE COURSE OBJECT FORM (CREATE OR UPDATE) ---
+        document.getElementById('courseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const title = document.getElementById('title').value.trim();
+            const description = document.getElementById('description').value;
+            const price = document.getElementById('price').value;
+            const originalPrice = document.getElementById('originalPrice').value;
+            const rating = document.getElementById('rating').value || "4.9 ★ (Premium Node)";
+            const fileInput = document.getElementById('imageFile').files[0];
+            const videoUrl = document.getElementById('videoUrl').value || '';
+            const pdfUrl = document.getElementById('pdfUrl').value || '';
+            const supportUrl = document.getElementById('supportUrl').value || '';
+            const instructorName = document.getElementById('instructorName').value || 'Syndicate Network Mentor';
+            const instructorTitle = document.getElementById('instructorTitle').value || 'Industry Expert';
+            const duration = document.getElementById('duration').value || '12 Hours';
+            const level = document.getElementById('level').value || 'All Levels';
+            const category = document.getElementById('category').value || 'Education';
+            const isPinned = document.getElementById('pinToTop').checked;
+
+            const learnArray = document.getElementById('learnPoints').value.split(',').map(p => p.trim()).filter(p => p !== '');
+            const modulesStructure = parseSyllabus(document.getElementById('syllabusText').value);
+            const projectsStructure = parseProjects(document.getElementById('projectsText').value);
+
+            try {
+                let base64Image = currentExistingImageBase64; // Fallback to old image if no new file uploaded
+                if (fileInput) {
+                    base64Image = await fileToBase64(fileInput);
+                } else if (!globalEditingCourseId) {
+                    // If creating fresh, image is strictly required
+                    showPopup("Please select a course thumbnail image file.", "error");
+                    return;
+                }
+
+                const coreObject = {
+                    title, description, price, originalPrice, rating, imageUrl: base64Image,
+                    videoUrl, pdfUrl, supportUrl, instructor: { name: instructorName, title: instructorTitle },
+                    duration, level, category, learn: learnArray, modules: modulesStructure, projects: projectsStructure,
+                    pinned: isPinned, priorityScore: isPinned ? 1 : 0, createdAt: Date.now()
+                };
+
+                if (globalEditingCourseId) {
+                    // Update existing course node configuration
+                    await database.ref('courses/' + globalEditingCourseId).update(coreObject);
+                    showPopup("Course Structure Node Updated Successfully!");
+                    exitEditMode();
+                } else {
+                    // Check duplicate title only on new registrations
+                    const snapshot = await database.ref('courses').orderByChild('title').equalTo(title).once('value');
+                    if (snapshot.exists()) {
+                        showPopup("Course title already initialized!", "error");
+                        return;
+                    }
+                    // Push clean fresh object
+                    await database.ref('courses').push(coreObject);
+                    showPopup("Full Dynamic Blueprint Matrix Uploaded!");
+                    document.getElementById('courseForm').reset();
+                }
+            } catch (error) {
+                console.error(error);
+                showPopup("Database matrix compilation error.", "error");
+            }
+        });
+
+        // --- MASTER COURSE DATABASE MONITOR ---
+        function loadAdminDashboard() {
+            database.ref('courses').on('value', (snapshot) => {
+                const tbody = document.getElementById('adminCourseList');
+                tbody.innerHTML = '';
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400">No blueprints registered inside active data blocks.</td></tr>`;
+                    return;
+                }
+                snapshot.forEach((childSnapshot) => {
+                    const id = childSnapshot.key;
+                    const c = childSnapshot.val();
+                    const badge = c.pinned ? `<span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Top 5 Locked</span>` : `<span class="text-slate-400 text-[9px]">Standard</span>`;
+                    
+                    const tr = `
+                        <tr class="hover:bg-slate-50 transition">
+                            <td class="p-3 w-16"><img src="${c.imageUrl || ''}" class="w-12 h-8 object-cover rounded bg-slate-900 border"></td>
+                            <td class="p-3">
+                                <div class="font-bold text-slate-900 truncate max-w-[180px]">${c.title}</div>
+                                <div class="text-[10px] text-slate-400 font-semibold">${c.duration || '12h'} • ${c.category || 'Core'}</div>
+                            </td>
+                            <td class="p-3 text-slate-600 font-medium">${c.instructor ? c.instructor.name : 'Network Mentor'}</td>
+                            <td class="p-3">${badge}</td>
+                            <td class="p-3 text-center flex items-center justify-center gap-1.5 h-14">
+                                <button onclick="activateEditMode('${id}')" class="text-blue-600 bg-blue-50 p-2 rounded-lg hover:bg-blue-100 transition" title="Edit Structure"><i class="fas fa-edit"></i></button>
+                                <button onclick="deleteNode('${id}')" class="text-red-500 bg-red-50 p-2 rounded-lg hover:bg-red-100 transition" title="Delete Node"><i class="far fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                    tbody.insertAdjacentHTML('afterbegin', tr);
+                });
+            });
+        }
+
+        // --- ACTIVATE EDIT MODE CONFIGURATION ---
+        function activateEditMode(id) {
+            database.ref('courses/' + id).once('value').then((snap) => {
+                if(!snap.exists()) return;
+                const c = snap.val();
+                
+                globalEditingCourseId = id;
+                currentExistingImageBase64 = c.imageUrl || "";
+
+                // Populate all fields for modification editing
+                document.getElementById('title').value = c.title || "";
+                document.getElementById('description').value = c.description || "";
+                document.getElementById('price').value = c.price || "";
+                document.getElementById('originalPrice').value = c.originalPrice || "";
+                document.getElementById('rating').value = c.rating || "";
+                document.getElementById('videoUrl').value = c.videoUrl || "";
+                document.getElementById('pdfUrl').value = c.pdfUrl || "";
+                document.getElementById('supportUrl').value = c.supportUrl || "";
+                document.getElementById('instructorName').value = c.instructor ? c.instructor.name : "";
+                document.getElementById('instructorTitle').value = c.instructor ? c.instructor.title : "";
+                document.getElementById('duration').value = c.duration || "";
+                document.getElementById('level').value = c.level || "";
+                document.getElementById('category').value = c.category || "";
+                document.getElementById('pinToTop').checked = c.pinned || false;
+
+                // Array reverse parsing elements back to string formats
+                document.getElementById('learnPoints').value = c.learn ? c.learn.join(', ') : "";
+                
+                if(c.modules) {
+                    document.getElementById('syllabusText').value = c.modules.map(m => `${m.title} | ${m.items.join(', ')}`).join('\n');
+                } else { document.getElementById('syllabusText').value = ""; }
+
+                if(c.projects) {
+                    document.getElementById('projectsText').value = c.projects.map(p => `${p.title} | ${p.desc}`).join('\n');
+                } else { document.getElementById('projectsText').value = ""; }
+
+                // Interface Layout Alterations
+                document.getElementById('formHeaderTitle').innerHTML = `<i class="fas fa-edit text-blue-600 mr-2"></i>Modify / Edit Course Matrix Object`;
+                document.getElementById('submitFormButton').className = "w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition shadow cursor-pointer";
+                document.getElementById('submitFormButton').innerHTML = `<i class="fas fa-save mr-1"></i> Save Changes & Update Architecture`;
+                
+                // Append dynamic Cancel Button node if missing
+                if(!document.getElementById('cancelEditBtn')) {
+                    const cancelBtn = `<button type="button" id="cancelEditBtn" onclick="exitEditMode()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs uppercase tracking-wider py-2 rounded-lg transition cursor-pointer text-center">Cancel Modifications</button>`;
+                    document.getElementById('formActionContainer').insertAdjacentHTML('beforeend', cancelBtn);
+                }
+
+                showPopup("Edit state activated. Form populated.", "success");
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        function exitEditMode() {
+            globalEditingCourseId = null;
+            currentExistingImageBase64 = "";
+            document.getElementById('courseForm').reset();
+            
+            document.getElementById('formHeaderTitle').innerHTML = `<i class="fas fa-plus-circle text-emerald-600 mr-2"></i>Upload Full Blueprint Data Object`;
+            document.getElementById('submitFormButton').className = "w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition shadow cursor-pointer";
+            document.getElementById('submitFormButton').innerHTML = `<i class="fas fa-server mr-1"></i> Sync Complete Blueprint Model`;
+            
+            const cancelBtn = document.getElementById('cancelEditBtn');
+            if(cancelBtn) cancelBtn.remove();
+        }
+
+        function deleteNode(id) {
+            if (confirm("Permanently wipe this entire dynamic course structure block?")) {
+                database.ref('courses/' + id).remove().then(() => showPopup("Course structure node destroyed."));
+            }
+        }
+
+        // --- LIVE MANUAL PAYMENT SETTLEMENT QUEUE MONITOR ---
+        function loadPaymentQueueDashboard() {
+            database.ref('payment_requests').on('value', (snapshot) => {
+                const tbody = document.getElementById('adminPaymentQueue');
+                tbody.innerHTML = '';
+                if (!snapshot.exists()) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400">No active settlements found inside request queue tracks.</td></tr>`;
+                    return;
+                }
+                
+                let holdsPendingCount = 0;
+                snapshot.forEach((childSnapshot) => {
+                    const reqId = childSnapshot.key;
+                    const data = childSnapshot.val();
+
+                    // Only map operational states marked as pending processing
+                    if (data.status === "pending") {
+                        holdsPendingCount++;
+                        const row = `
+                            <tr class="hover:bg-amber-50/40 transition bg-amber-50/10">
+                                <td class="p-3 font-semibold text-slate-900 truncate max-w-[150px]" title="${data.userEmail}">${data.userEmail}</td>
+                                <td class="p-3 font-mono text-[11px] text-slate-500">${data.courseId}</td>
+                                <td class="p-3 font-mono font-bold tracking-wider text-slate-700">${data.utrId}</td>
+                                <td class="p-3 text-center flex items-center justify-center gap-1.5">
+                                    <button onclick="settlePaymentStatus('${reqId}', 'approved')" class="bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1.5 rounded-md hover:bg-emerald-700 shadow-xs cursor-pointer transition">Approve</button>
+                                    <button onclick="settlePaymentStatus('${reqId}', 'rejected')" class="bg-red-50 text-red-600 text-[10px] font-black uppercase px-2.5 py-1.5 rounded-md hover:bg-red-100 cursor-pointer transition">Reject</button>
+                                </td>
+                            </tr>
+                        `;
+                        tbody.insertAdjacentHTML('beforeend', row);
+                    }
+                });
+
+                if (holdsPendingCount === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-emerald-600 font-bold bg-emerald-50/50">🎉 All payment requests cleared and synchronized! Operational state balance neutral.</td></tr>`;
+                }
+            });
+        }
+
+        // SETTLE STATUS TRANSFORMATION ROUTINE
+        function settlePaymentStatus(requestId, finalResolution) {
+            if (confirm(`Execute global manual confirmation setting state to: ${finalResolution.toUpperCase()}?`)) {
+                database.ref(`payment_requests/${requestId}`).update({
+                    status: finalResolution,
+                    resolvedAt: Date.now()
+                }).then(() => {
+                    showPopup(`Settlement parameters updated to: ${finalResolution.toUpperCase()}`, "success");
+                }).catch(err => {
+                    showPopup("Error logging settlement resolution metrics.", "error");
+                    console.error(err);
+                });
+            }
+        }
+
+        // Global Orchestration Initialization Stacks
+        window.onload = function() {
+            loadAdminDashboard();
+            loadPaymentQueueDashboard();
+        };
+    </script>
+</body>
+</html>

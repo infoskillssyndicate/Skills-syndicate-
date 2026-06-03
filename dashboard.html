@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .dashboard-card { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="bg-slate-50/50 text-slate-900 min-h-screen flex flex-col justify-between">
+
+    <!-- TOP HEADER -->
+    <header class="bg-white border-b border-slate-100 py-4 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <span class="text-base font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE STUDENT PANEL
+            </span>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden sm:block">
+                    <p id="navUserEmail" class="text-xs font-bold text-slate-700">Loading...</p>
+                    <p class="text-[9px] text-emerald-600 font-bold uppercase tracking-wider">Verified Portal</p>
+                </div>
+                <button onclick="logoutEngine()" class="text-slate-400 hover:text-red-500 text-sm transition cursor-pointer">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN INTERFACE -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <!-- INITIAL CORE LOADER -->
+        <div id="dashboardLoader" class="text-center py-20 font-bold text-slate-400">
+            <i class="fas fa-circle-notch fa-spin text-3xl text-emerald-600 mb-3 block"></i>
+            Fetching Account Node & Mapping Enrollments...
+        </div>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div id="dashboardWorkspace" class="hidden space-y-8">
+            
+            <!-- WELCOME BANNER -->
+            <div class="bg-slate-950 text-white p-6 rounded-2xl relative overflow-hidden shadow-lg">
+                <div class="relative z-10">
+                    <span class="bg-emerald-500 text-[8px] font-black uppercase px-2 py-0.5 rounded tracking-widest">Active Workspace</span>
+                    <h1 class="text-xl md:text-2xl font-black tracking-tight mt-2 text-slate-100">Welcome Back, <span id="welcomeUser">Learner</span>!</h1>
+                    <p class="text-xs text-slate-400 mt-1">Apne courses aur affiliate business ko ek hi jagah se manage karo.</p>
+                </div>
+                <div class="absolute right-6 bottom-0 text-slate-900/40 text-9xl font-black select-none pointer-events-none transform translate-y-10 hidden md:block">SS</div>
+            </div>
+
+            <!-- DASHBOARD GRID LAYER -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                
+                <!-- LEFT & CENTER: COURSE METADATA (2 COLS) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider"><i class="fas fa-graduation-cap text-emerald-600 mr-1"></i> Your Enrolled Course</h3>
+                    
+                    <div class="bg-white border border-slate-200/80 rounded-2xl p-6 dashboard-card flex flex-col md:flex-row gap-5 items-start md:items-center justify-between">
+                        <div class="space-y-2 flex-grow">
+                            <span id="courseCategory" class="text-[9px] font-black text-emerald-600 uppercase tracking-widest bg-emerald-50 px-2 py-1 rounded">--</span>
+                            <h2 id="courseTitle" class="text-base font-extrabold tracking-tight text-slate-900 leading-snug">--</h2>
+                            
+                            <!-- Status Badges -->
+                            <div id="statusVerificationContainer" class="flex items-center gap-2 pt-1">
+                                <!-- Status dynamic rendering hooks -->
+                                <span id="statusPendingBadge" class="hidden bg-amber-50 text-amber-600 border border-amber-200 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                                    <i class="fas fa-hourglass-half animate-spin text-[8px]"></i> Payment Verification Pending
+                                </span>
+                                <span id="statusApprovedBadge" class="hidden bg-emerald-50 text-emerald-700 border border-emerald-200 text-[9px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+                                    <i class="fas fa-check-circle"></i> Access Unlocked
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- DYNAMIC INTERACTION ACTION BUTTON -->
+                        <div class="w-full md:w-auto pt-4 md:pt-0 border-t md:border-t-0 border-slate-100 flex flex-col items-stretch md:items-end gap-2 shrink-0">
+                            <!-- Locked Placeholder View -->
+                            <div id="courseLockedMessage" class="text-slate-400 text-left md:text-right text-[11px] font-medium space-y-0.5">
+                                <p><i class="fas fa-shield-alt text-amber-500 mr-1"></i> Manual verification loop is active.</p>
+                                <p>Access activates within 1-2 hours of payment.</p>
+                            </div>
+
+                            <!-- "Start Learning" Core Trigger Element -->
+                            <a href="#" id="startLearningBtn" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition shadow-md text-center">
+                                <i class="fas fa-play-circle mr-1.5"></i> Start Learning
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDEBAR: AUTOMATIC AFFILIATE LAYER (1 COL) -->
+                <div class="space-y-4">
+                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider"><i class="fas fa-wallet text-emerald-600 mr-1"></i> Affiliate Control Panel</h3>
+                    
+                    <!-- LOCKED STATE UI -->
+                    <div id="affiliateLockedBox" class="bg-white border border-slate-200 rounded-2xl p-5 dashboard-card text-center py-8 space-y-3">
+                        <div class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
+                            <i class="fas fa-lock text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-800">Affiliate Link Locked</h4>
+                            <p class="text-[11px] text-slate-400 mt-1 max-w-[200px] mx-auto">Apna personal 5% discount code aur tracking link unlock karne ke liye pehle apna batch enrollment approve karwayein.</p>
+                        </div>
+                    </div>
+
+                    <!-- UNLOCKED STATE UI (DEFAULT HIDDEN) -->
+                    <div id="affiliateUnlockedBox" class="hidden bg-gradient-to-br from-slate-900 to-slate-950 text-white p-5 rounded-2xl border border-emerald-500/20 shadow-lg space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-emerald-500 text-[8px] font-black uppercase px-2 py-0.5 rounded tracking-widest text-slate-950 animate-pulse">System Active</span>
+                            <i class="fas fa-chart-line text-emerald-400 text-xs"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-black tracking-tight text-slate-100">💰 Share Links & Earn Commissions!</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Doston ko invite karo. Unhe milega **5% off** aur aapko milega direct commission payload.</p>
+                        </div>
+                        
+                        <div class="space-y-3 pt-2 border-t border-white/10">
+                            <div>
+                                <label class="text-[8px] text-slate-500 font-bold uppercase tracking-wider block">Your Personal Promo Code</label>
+                                <span id="myPromoCodeDisplay" class="text-sm font-black text-emerald-400 font-mono tracking-wider uppercase">--</span>
+                            </div>
+                            <div>
+                                <label class="text-[8px] text-slate-500 font-bold uppercase tracking-wider block">Tracking Reference Link</label>
+                                <div class="flex items-center gap-1.5 mt-1">
+                                    <input type="text" id="myAffiliateLinkDisplay" readonly class="w-full text-[10px] bg-slate-900 border border-slate-800 rounded-lg p-2 text-slate-300 font-mono focus:outline-none select-all">
+                                    <button onclick="copyAffiliateLink()" class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-lg text-xs transition cursor-pointer"><i class="fas fa-copy"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER CLOSURE -->
+    <footer class="bg-white border-t border-slate-100 py-4 text-[10px] text-center text-slate-400 font-medium w-full">
+        &copy; 2026 Skills Syndicate Student Portal Infrastructure. All Rights Reserved.
+    </footer>
+
+    <!-- SDK FIREBASE HOOKS -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        let sessionActiveEmail = "";
+
+        auth.onAuthStateChanged((user) => {
+            const localSession = localStorage.getItem('ss_user_session');
+
+            if (!user && !localSession) {
+                alert("ACCESS DENIED: Session context empty. Re-authenticating...");
+                window.location.href = 'index.html'; // Path to login panel
+                return;
+            }
+
+            // Extract email string reference
+            if (user && user.email) {
+                sessionActiveEmail = user.email;
+            } else if (localSession) {
+                try { sessionActiveEmail = JSON.parse(localSession).email; } catch(e) { sessionActiveEmail = "learner@syndicate"; }
+            }
+
+            document.getElementById('navUserEmail').innerText = sessionActiveEmail;
+            document.getElementById('welcomeUser').innerText = sessionActiveEmail.split('@')[0];
+
+            // Trigger mapping system
+            evaluateUserEnrollmentFailsafe(sessionActiveEmail, user ? user.uid : "fallback_uid");
+        });
+
+        function evaluateUserEnrollmentFailsafe(emailString, uidString) {
+            // Ham check kar rahe hain 'payment_requests' node direct query parameters par
+            database.ref('payment_requests').orderByChild('userEmail').equalTo(emailString).once('value').then((snapshot) => {
+                
+                if (!snapshot.exists()) {
+                    // Agar koi record nahi milta means bache ne payment step skip kiya hai
+                    document.getElementById('courseTitle').innerText = "No Pending or Active Enrollments Registered";
+                    document.getElementById('courseCategory').innerText = "System Idle";
+                    
+                    document.getElementById('dashboardLoader').classList.add('hidden');
+                    document.getElementById('dashboardWorkspace').classList.remove('hidden');
+                    return;
+                }
+
+                // Capture the most recent payment object loop
+                let targetPayload = null;
+                snapshot.forEach((childSnapshot) => {
+                    targetPayload = childSnapshot.val(); // Loop updates to latest structural element
+                });
+
+                const courseTargetId = targetPayload.courseId;
+                const paymentStatus = targetPayload.status; // pending, approved, etc.
+
+                // Load course static elements details map
+                database.ref('courses/' + courseTargetId).once('value').then((courseSnap) => {
+                    if (courseSnap.exists()) {
+                        document.getElementById('courseTitle').innerText = courseSnap.val().title || "Blueprint Module";
+                        document.getElementById('courseCategory').innerText = courseSnap.val().category || "Ecosystem";
+                        
+                        if(courseSnap.val().learningLink) {
+                            document.getElementById('startLearningBtn').href = courseSnap.val().learningLink;
+                        } else {
+                            document.getElementById('startLearningBtn').href = `course-access.html?course=${courseTargetId}`;
+                        }
+                    }
+
+                    // CORE STATUS CONDITIONAL VERIFICATION ARCHITECTURE
+                    if (paymentStatus === "approved") {
+                        // 🔓 STAGE 1: Reveal Course Panel Triggers
+                        document.getElementById('statusApprovedBadge').classList.remove('hidden');
+                        document.getElementById('courseLockedMessage').classList.add('hidden');
+                        document.getElementById('startLearningBtn').classList.remove('hidden');
+
+                        // 🔓 STAGE 2: Execute Affiliate Lock Release & Registration Handshake
+                        const structuredCleanId = emailString.split('@')[0].replace(/[^a-zA-Z0-9]/g, '').toUpperCase();
+                        const generatedPromoCode = `${structuredCleanId}5`; // Creates token like "AMIT5"
+
+                        const affiliateRegistrationObj = {
+                            name: structuredCleanId,
+                            email: emailString,
+                            discountRate: 5,
+                            isActive: true,
+                            creationTimestamp: Date.now()
+                        };
+
+                        // Register custom tracking array inside core Realtime DB root node
+                        database.ref('affiliates/' + generatedPromoCode).set(affiliateRegistrationObj).then(() => {
+                            // Swap View blocks
+                            document.getElementById('affiliateLockedBox').classList.add('hidden');
+                            document.getElementById('affiliateUnlockedBox').classList.remove('hidden');
+                            
+                            document.getElementById('myPromoCodeDisplay').innerText = generatedPromoCode;
+                            document.getElementById('myAffiliateLinkDisplay').value = `${window.location.origin}/payment.html?course=${courseTargetId}&ref=${generatedPromoCode}`;
+                        });
+
+                    } else {
+                        // 🔒 Keep locked state elements active if status is "pending" or any other fallback
+                        document.getElementById('statusPendingBadge').classList.remove('hidden');
+                        document.getElementById('courseLockedMessage').classList.remove('hidden');
+                        document.getElementById('startLearningBtn').classList.add('hidden');
+                        
+                        document.getElementById('affiliateLockedBox').classList.remove('hidden');
+                        document.getElementById('affiliateUnlockedBox').classList.add('hidden');
+                    }
+
+                    // Soft UI reveal execution closure
+                    document.getElementById('dashboardLoader').classList.add('hidden');
+                    document.getElementById('dashboardWorkspace').classList.remove('hidden');
+                });
+
+            }).catch(err => {
+                console.error("UI Core Rendering Failure Exception:", err);
+            });
+        }
+
+        function copyAffiliateLink() {
+            const linkInput = document.getElementById('myAffiliateLinkDisplay');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // Mobile optimization
+            navigator.clipboard.writeText(linkInput.value);
+            alert("Copied successfully! Share this link to start tracking affiliate data commissions.");
+        }
+
+        function logoutEngine() {
+            auth.signOut().then(() => {
+                localStorage.removeItem('ss_user_session');
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

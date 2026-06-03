@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfc; }
+        .form-input:focus { outline: none; border-color: #059669; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1); }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <a href="index.html" class="text-[11px] font-bold text-slate-600 hover:text-emerald-600 transition">
+                <i class="fas fa-arrow-left mr-1"></i> Back Home
+            </a>
+        </div>
+    </header>
+
+    <section class="max-w-md mx-auto px-4 py-10">
+        
+        <div class="text-center mb-6">
+            <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-user-plus text-xl text-emerald-600"></i>
+            </div>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Create Account</h2>
+            <p class="text-xs text-slate-500 mt-1">Join Skills Syndicate & start learning</p>
+        </div>
+
+        <div id="referralAlertBadge" class="hidden bg-emerald-50 border border-emerald-100 rounded-xl p-3 mb-4 text-center">
+            <p class="text-[10px] font-bold text-emerald-700 flex items-center justify-center gap-1.5">
+                <i class="fas fa-link"></i> Secured Affiliate Pipeline Link Activated!
+            </p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-lg p-6">
+            
+            <div class="mb-4">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Full Name *</label>
+                <input type="text" id="signupName" placeholder="Enter your full name" 
+                       class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm">
+            </div>
+
+            <div class="mb-4">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Email Address *</label>
+                <input type="email" id="signupEmail" placeholder="your@email.com" 
+                       class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm">
+            </div>
+
+            <div class="mb-4">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Phone Number</label>
+                <input type="tel" id="signupPhone" placeholder="+91 98765 43210" 
+                       class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm">
+            </div>
+
+            <div class="mb-5">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Password *</label>
+                <div class="relative">
+                    <input type="password" id="signupPassword" placeholder="Min 6 characters" 
+                           class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm pr-10">
+                    <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm cursor-pointer hover:text-emerald-600"
+                       onclick="togglePassword()"></i>
+                </div>
+            </div>
+
+            <button onclick="signupUser()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider py-3 rounded-lg transition cursor-pointer">
+                <i class="fas fa-user-plus mr-1"></i> Create Account
+            </button>
+
+            <div class="flex items-center gap-3 my-4">
+                <div class="flex-1 h-px bg-slate-200"></div>
+                <span class="text-[10px] text-slate-400 font-bold uppercase">OR</span>
+                <div class="flex-1 h-px bg-slate-200"></div>
+            </div>
+
+            <button onclick="googleSignup()" class="w-full bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs uppercase tracking-wider py-2.5 rounded-lg transition flex items-center justify-center gap-2 cursor-pointer">
+                <i class="fab fa-google text-red-500"></i> Sign up with Google
+            </button>
+
+            <p class="text-center text-[10px] text-slate-500 mt-4">
+                Already have an account? 
+                <a href="login.html" class="text-emerald-600 font-bold hover:underline">Login</a>
+            </p>
+            
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-slate-500 py-6 text-[11px] mt-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script>
+        // Firebase Config Matrix
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // 🛑 STEP 1: Stealth Referral Code Tracking Engine 
+        function trackReferralVector() {
+            const urlParameters = new URLSearchParams(window.location.search);
+            const trackingUID = urlParameters.get('ref');
+            
+            if (trackingUID && trackingUID.trim() !== "") {
+                // Browser persistent storage lock setup (Shared key matching with checkout page)
+                localStorage.setItem('ss_stealth_referrer', trackingUID.trim());
+                
+                // Native UI Layout activation check
+                const badge = document.getElementById('referralAlertBadge');
+                if (badge) badge.classList.remove('hidden');
+            }
+        }
+        
+        // Execute parameter parsing instantly on configuration lifecycle
+        trackReferralVector();
+
+        // Toggle Password Visibility
+        function togglePassword() {
+            const input = document.getElementById('signupPassword');
+            const icon = input.nextElementSibling;
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Email/Password Signup Execution
+        function signupUser() {
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const phone = document.getElementById('signupPhone').value.trim();
+            const password = document.getElementById('signupPassword').value;
+
+            if (!name || !email || !password) {
+                alert('⚠️ Please fill all required fields!');
+                return;
+            }
+
+            if (password.length < 6) {
+                alert('⚠️ Password must be at least 6 characters!');
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    
+                    // 🛑 STEP 2: Extract Safe Pipeline Key from Cache cluster
+                    const resolvedReferrerUID = localStorage.getItem('ss_stealth_referrer') || "";
+
+                    // Save Core Profile to Firestore (Bina network breaks ke setup)
+                    db.collection('users').doc(user.uid).set({
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        uid: user.uid,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        courses: [],
+                        
+                        // 👇 MARKETING INJECTIONS (Fraud and attribution controllers)
+                        referredBy: resolvedReferrerUID,
+                        commissionContributed: 0,
+                        isPurchased: false
+                    })
+                    .then(() => {
+                        // Save session natively
+                        localStorage.setItem('ss_user_session', JSON.stringify({
+                            uid: user.uid,
+                            email: user.email,
+                            name: name,
+                            loginTime: Date.now()
+                        }));
+
+                        alert('✅ Account Created Successfully! Welcome to Skills Syndicate!');
+                        
+                        // Check if user was trying to enroll
+                        const pendingCourse = localStorage.getItem('ss_enroll_course');
+                        if (pendingCourse) {
+                            localStorage.removeItem('ss_enroll_course');
+                            window.location.replace('./payment.html?course=' + pendingCourse);
+                        } else {
+                            window.location.replace('./dashboard.html');
+                        }
+                    });
+                })
+                .catch((error) => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        alert('❌ Email already registered. Please login instead.');
+                    } else if (error.code === 'auth/weak-password') {
+                        alert('❌ Password is too weak. Use at least 6 characters.');
+                    } else {
+                        alert('❌ Signup Failed: ' + error.message);
+                    }
+                });
+        }
+
+        // Google Signup Execution
+        function googleSignup() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    
+                    // 🛑 STEP 3: Handle Google signup pipeline checks
+                    const resolvedReferrerUID = localStorage.getItem('ss_stealth_referrer') || "";
+                    
+                    // Save to Firestore with merge options (Prevents metadata destruction)
+                    db.collection('users').doc(user.uid).set({
+                        name: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                        uid: user.uid,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        courses: [],
+                        
+                        // 👇 IN-BUILT TUNNEL PROTECTIONS (Will not overwrite if already exist due to merge)
+                        referredBy: resolvedReferrerUID,
+                        commissionContributed: 0,
+                        isPurchased: false
+                    }, { merge: true })
+                    .then(() => {
+                        // Save session
+                        localStorage.setItem('ss_user_session', JSON.stringify({
+                            uid: user.uid,
+                            email: user.email,
+                            name: user.displayName,
+                            photoURL: user.photoURL,
+                            loginTime: Date.now()
+                        }));
+
+                        alert('✅ Account Created Successfully!');
+                        
+                        const pendingCourse = localStorage.getItem('ss_enroll_course');
+                        if (pendingCourse) {
+                            localStorage.removeItem('ss_enroll_course');
+                            window.location.replace('./payment.html?course=' + pendingCourse);
+                        } else {
+                            window.location.replace('./dashboard.html');
+                        }
+                    });
+                })
+                .catch((error) => {
+                    alert('❌ Google Signup Failed: ' + error.message);
+                });
+        }
+
+        // Auth State Monitor Hook (Optimized for First-Time Entry Loops)
+        auth.onAuthStateChanged((user) => {
+            const checkingReferral = localStorage.getItem('ss_stealth_referrer');
+            // If user is logged in BUT came through an active referral, let the funnel process without instant force-redirect blocks
+            if (user && !checkingReferral) {
+                window.location.replace('./dashboard.html');
+            }
+        });
+    </script>
+</body>
+</html>

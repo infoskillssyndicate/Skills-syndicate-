@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfcfc; 
+        }
+        
+        .blog-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+        
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+        
+        .blog-img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .category-badge {
+            backdrop-filter: blur(10px);
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #059669, #047857);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .author-avatar {
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card:hover .author-avatar {
+            border-color: #059669;
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="#" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <nav class="hidden md:flex space-x-5 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="#" class="hover:text-emerald-600 transition">Home</a>
+                <a href="#" class="hover:text-emerald-600 transition">Courses</a>
+                <a href="#" class="hover:text-emerald-600 transition">Affiliates</a>
+                <a href="#" class="text-emerald-600">Blogs</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-800 rounded-full hover:bg-slate-200 transition">
+                    <i class="far fa-user text-sm"></i>
+                </a>
+                <button class="text-slate-900 hover:text-emerald-600 transition cursor-pointer">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="flex-1">
+                    <span class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/30">
+                        <i class="fas fa-pen-fancy text-xs"></i> Insights Hub
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold mt-4 tracking-tight leading-tight">
+                        Master The <span class="text-emerald-400">Digital Economy</span> Through Expert Insights
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base mt-3 max-w-xl leading-relaxed">
+                        Actionable strategies on skill acquisition, freelancing growth, and affiliate marketing—crafted for serious professionals ready to dominate their niche.
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <div class="mt-6 relative max-w-md">
+                        <input type="text" placeholder="Search articles..." class="newsletter-input w-full bg-white/10 border border-white/20 text-white placeholder-slate-400 px-4 py-3 rounded-lg text-sm focus:outline-none">
+                        <button class="absolute right-2 top-1/2 -translate-y-1/2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-md text-xs font-bold transition">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="flex gap-6 mt-6 text-[11px] text-slate-400">
+                        <span><i class="fas fa-file-alt text-emerald-400 mr-1"></i> 120+ Articles</span>
+                        <span><i class="fas fa-users text-emerald-400 mr-1"></i> 45K+ Readers</span>
+                        <span><i class="fas fa-clock text-emerald-400 mr-1"></i> Weekly Updates</span>
+                    </div>
+                </div>
+                
+                <!-- Featured Post Preview -->
+                <div class="flex-1 hidden md:block">
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-6 backdrop-blur-sm">
+                        <span class="text-emerald-400 text-[10px] font-bold uppercase tracking-wider">🔥 Trending Now</span>
+                        <h3 class="text-lg font-bold mt-2 leading-snug">How I Made ₹2.5 Lakhs/Month Through Affiliate Marketing Without Any Followers</h3>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">The exact blueprint I used to generate consistent passive income using Skills Syndicate's affiliate program...</p>
+                        <div class="flex items-center gap-3 mt-4 text-xs text-slate-400">
+                            <img src="https://i.pravatar.cc/30?img=11" alt="Author" class="w-7 h-7 rounded-full border border-emerald-500/50">
+                            <span>Arjun Mehta</span>
+                            <span>•</span>
+                            <span>6 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filter Pills -->
+    <section class="max-w-6xl mx-auto px-4 py-6">
+        <div class="flex flex-wrap gap-2">
+            <button class="bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full">All Posts</button>
+            <button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-slate-50 transition">Skill Development</button>
+            <button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-slate-50 transition">Freelancing</button>
+            <button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-slate-50 transition">Affiliate Marketing</button>
+            <button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-slate-50 transition">Tech & Tools</button>
+            <button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-full hover:bg-slate-50 transition">Case Studies</button>
+        </div>
+    </section>
+
+    <!-- Main Blog Grid -->
+    <section class="max-w-6xl mx-auto px-4 pb-12">
+        
+        <!-- Featured Large Post -->
+        <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden mb-6 group cursor-pointer">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div class="overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop" alt="Freelancing" class="blog-img w-full h-full object-cover">
+                </div>
+                <div class="p-6 md:p-8 flex flex-col justify-center">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-emerald-100 text-emerald-700 text-[9px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">Freelancing</span>
+                        <span class="text-[10px] text-slate-400">Featured</span>
+                    </div>
+                    <h2 class="text-xl md:text-2xl font-extrabold text-slate-900 leading-tight group-hover:text-emerald-600 transition">
+                        The Ultimate 2026 Freelancing Stack: Skills That Pay ₹1 Lakh+/Month
+                    </h2>
+                    <p class="text-slate-500 text-xs md:text-sm mt-2 leading-relaxed">
+                        Discover the exact combination of skills, tools, and platforms that top freelancers use to command premium rates in 2026. From AI integration to Web3 development...
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 text-[11px] text-slate-400">
+                        <img src="https://i.pravatar.cc/30?img=12" alt="Author" class="w-7 h-7 rounded-full author-avatar border-2 border-transparent">
+                        <span class="font-semibold text-slate-700">Priya Sharma</span>
+                        <span>•</span>
+                        <span>8 min read</span>
+                        <span>•</span>
+                        <span>2 days ago</span>
+                    </div>
+                    <a href="#" class="inline-flex items-center gap-1 text-emerald-600 text-xs font-bold mt-4 hover:gap-2 transition-all">
+                        Read Full Article <i class="fas fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 Column Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
+            
+            <!-- Blog 1 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop" alt="Affiliate" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-orange-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Affiliate</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        Beginner's Blueprint: Earn ₹50K/Month With Skills Syndicate Affiliate Program
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        No audience? No problem. Learn the secret traffic sources that top affiliates use to generate consistent commissions...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 2.3K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">5 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog 2 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=400&fit=crop" alt="Students" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-blue-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Students</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        College Student's Guide: Balance Studies & Freelancing Without Burnout
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        Practical time management frameworks that help students earn while learning without sacrificing grades or social life...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 5.1K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">7 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog 3 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop" alt="Tech Stack" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-purple-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Tech</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        React.js vs Next.js in 2026: Which Framework Gets You Higher Paying Clients?
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        Real data from Upwork and Fiverr showing which tech stack commands the highest hourly rates in the current market...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 3.8K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">6 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog 4 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop" alt="Portfolio" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-green-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Career</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        Build A Killer Portfolio That Lands ₹50K+ Projects (With Zero Experience)
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        Step-by-step guide to creating mock projects that impressed real clients and helped 200+ students land their first gig...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 7.2K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">10 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog 5 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1563986768609-322da13575f2?w=600&h=400&fit=crop" alt="Marketing" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-red-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Marketing</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        Digital Marketing Arbitrage: How We Generate 400% ROI For Clients
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        Inside look at our advanced funnel infrastructure and growth hacking systems that deliver exponential returns...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 1.9K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">9 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog 6 -->
+            <div class="blog-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden group cursor-pointer">
+                <div class="relative h-44 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=400&fit=crop" alt="Success Story" class="blog-img w-full h-full object-cover">
+                    <span class="category-badge absolute top-3 left-3 bg-yellow-500/90 text-white text-[9px] font-bold uppercase tracking-wider px-2 py-1 rounded">Success Story</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="text-sm font-bold text-slate-900 leading-snug group-hover:text-emerald-600 transition">
+                        Case Study: How Ravi Went From ₹15K Job To ₹2 Lakhs/Month Freelancer
+                    </h3>
+                    <p class="text-slate-500 text-[11px] mt-2 leading-relaxed line-clamp-2">
+                        The complete journey including failures, learnings, and the exact strategy that transformed his career in 8 months...
+                    </p>
+                    <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-50">
+                        <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                            <i class="far fa-eye"></i> 8.5K reads
+                        </div>
+                        <span class="text-[10px] text-slate-400">12 min read</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Load More Button -->
+        <div class="text-center mt-10">
+            <button class="bg-slate-900 hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider px-6 py-3 rounded-lg transition inline-flex items-center gap-2">
+                Load More Articles <i class="fas fa-chevron-down text-[10px]"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-800 py-12">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <i class="fas fa-paper-plane text-3xl text-emerald-200 mb-3"></i>
+            <h2 class="text-2xl font-extrabold text-white tracking-tight">Get Insider Strategies Weekly</h2>
+            <p class="text-emerald-100 text-sm mt-2 max-w-md mx-auto">
+                Join 45,000+ professionals receiving exclusive freelancing tips, affiliate strategies, and skill development insights.
+            </p>
+            <form class="mt-6 flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <input type="email" placeholder="Enter your email address" class="newsletter-input flex-1 bg-white/10 border border-emerald-400/30 text-white placeholder-emerald-200 px-4 py-3 rounded-lg text-sm">
+                <button class="bg-white text-emerald-700 font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg hover:bg-emerald-50 transition">
+                    Subscribe Free
+                </button>
+            </form>
+            <p class="text-emerald-200 text-[10px] mt-3">No spam. Unsubscribe anytime. We respect your inbox.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-8 text-[11px]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-2">Skills Syndicate</h4>
+                    <p class="leading-relaxed text-xs">Premium skill acquisition platform for the modern digital professional.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Quick Links</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#" class="hover:text-emerald-400 transition">Courses</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Affiliate Program</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Freelancing Hub</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Blogs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Categories</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#" class="hover:text-emerald-400 transition">Skill Development</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Freelancing Tips</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Affiliate Marketing</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Tech Tutorials</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Connect</h5>
+                    <div class="flex space-x-3 text-base">
+                        <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p>&copy; 2026 Skills Syndicate. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-emerald-400 transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-emerald-400 transition">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Category Filter
+        document.querySelectorAll('.category-filter').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.category-filter').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfc; }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <a href="index.html" class="text-[11px] font-bold text-slate-600 hover:text-emerald-600 transition">
+                <i class="fas fa-arrow-left mr-1"></i> Back Home
+            </a>
+        </div>
+    </header>
+
+    <section class="max-w-md mx-auto px-4 py-10">
+        
+        <div class="text-center mb-6">
+            <div class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-sign-in-alt text-xl text-emerald-600"></i>
+            </div>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Welcome Back</h2>
+            <p class="text-xs text-slate-500 mt-1">Login to access your courses</p>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 shadow-lg p-6">
+            
+            <div class="mb-4">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Email Address *</label>
+                <input type="email" id="loginEmail" required placeholder="your@email.com" 
+                       class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm">
+            </div>
+
+            <div class="mb-5">
+                <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Password *</label>
+                <div class="relative">
+                    <input type="password" id="loginPassword" required placeholder="Enter your password" 
+                           class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm pr-10">
+                    <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm cursor-pointer hover:text-emerald-600"
+                       id="togglePasswordIcon"></i>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between mb-5">
+                <label class="flex items-center gap-2 text-[10px] text-slate-600 cursor-pointer">
+                    <input type="checkbox" id="rememberMe"> Remember me
+                </label>
+                <a href="#" class="text-[10px] text-emerald-600 font-bold hover:underline">Forgot Password?</a>
+            </div>
+
+            <button id="btnLogin" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider py-3 rounded-lg transition cursor-pointer">
+                <i class="fas fa-sign-in-alt mr-1"></i> Login
+            </button>
+
+            <div class="flex items-center gap-3 my-4">
+                <div class="flex-1 h-px bg-slate-200"></div>
+                <span class="text-[10px] text-slate-400">OR</span>
+                <div class="flex-1 h-px bg-slate-200"></div>
+            </div>
+
+            <button id="btnGoogle" class="w-full bg-white border-2 border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs uppercase tracking-wider py-2.5 rounded-lg transition flex items-center justify-center gap-2 cursor-pointer">
+                <i class="fab fa-google text-red-500"></i> Login with Google
+            </button>
+
+            <p class="text-center text-[10px] text-slate-500 mt-4">
+                Don't have an account? 
+                <a href="signup.html" class="text-emerald-600 font-bold hover:underline">Sign Up</a>
+            </p>
+            
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-slate-500 py-6 text-[11px] mt-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Firebase Config
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Toggle Password Visibility
+        document.getElementById('togglePasswordIcon').addEventListener('click', () => {
+            const input = document.getElementById('loginPassword');
+            const icon = document.getElementById('togglePasswordIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Email/Password Login Logic
+        async function loginUser() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                alert('Please fill all fields!');
+                return;
+            }
+
+            try {
+                // 1. Firebase Auth Sign In
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // 2. 🔄 NEW: Save/Update Login details inside Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    email: user.email,
+                    lastLogin: serverTimestamp()
+                }, { merge: true });
+
+                // 3. Local/Session Storage management
+                const sessionData = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || email.split('@')[0]
+                };
+
+                if (document.getElementById('rememberMe').checked) {
+                    localStorage.setItem('ss_currentUser', JSON.stringify(sessionData));
+                } else {
+                    sessionStorage.setItem('ss_currentUser', JSON.stringify(sessionData));
+                }
+
+                alert('✅ Login Successful!');
+                
+                // 🚀 REDIRECT: User directly goes to dashboard.html now
+                window.location.href = 'dashboard.html';
+
+            } catch (error) {
+                console.error("Login process failed:", error);
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                    alert('❌ Invalid email or password. Please try again.');
+                } else if (error.code === 'auth/wrong-password') {
+                    alert('❌ Incorrect password.');
+                } else {
+                    alert('❌ Login Error: ' + error.message);
+                }
+            }
+        }
+
+        // Google Login Logic
+        async function googleLogin() {
+            const provider = new GoogleAuthProvider();
+            try {
+                // 1. Google Authentication Popup
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // 2. 🔄 NEW: Update Profile Info + Last Login timestamp in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    name: user.displayName,
+                    email: user.email,
+                    photoURL: user.photoURL,
+                    lastLogin: serverTimestamp()
+                }, { merge: true });
+
+                // 3. Save Session
+                const sessionData = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName,
+                    photoURL: user.photoURL
+                };
+                localStorage.setItem('ss_currentUser', JSON.stringify(sessionData));
+
+                alert('✅ Google Login Successful!');
+                
+                // 🚀 REDIRECT: Go straight to dashboard.html
+                window.location.href = 'dashboard.html';
+
+            } catch (error) {
+                console.error("Google login failed:", error);
+                alert('❌ Google Login Failed: ' + error.message);
+            }
+        }
+
+        // Attach Event Listeners to Buttons
+        document.getElementById('btnLogin').addEventListener('click', loginUser);
+        document.getElementById('btnGoogle').addEventListener('click', googleLogin);
+
+        // Auto-check session block
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("Logged-in user session detected:", user.uid);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfc; }
+        .payment-box { box-shadow: 0 25px 50px -12px rgba(5, 150, 105, 0.15); }
+    </style>
+</head>
+<body class="text-slate-900 bg-slate-50/50 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-white border-b border-slate-100 py-3">
+        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
+            <span class="text-base font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE SECURE GATEWAY
+            </span>
+            <div class="flex items-center gap-1.5 text-slate-400 text-[11px] font-bold uppercase tracking-wider">
+                <i class="fas fa-shield-alt text-emerald-600"></i> Manual Verification Active
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 flex-grow w-full flex items-center justify-center">
+        
+        <div id="paymentLoader" class="text-center py-12 font-bold text-slate-400">
+            <i class="fas fa-circle-notch fa-spin text-3xl text-emerald-600 mb-3 block"></i>
+            Verifying Identity & Securing Token Instance...
+        </div>
+
+        <div id="paymentWorkspace" class="hidden w-full max-w-3xl bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden payment-box grid grid-cols-1 md:grid-cols-5">
+            
+            <div class="md:col-span-2 bg-slate-950 text-white p-6 flex flex-col justify-between border-r border-slate-800">
+                <div>
+                    <span class="bg-emerald-500 text-[8px] font-black uppercase px-2 py-0.5 rounded tracking-widest block w-max mb-3">Invoice Summary</span>
+                    <h3 id="summaryTitle" class="text-sm font-bold tracking-tight text-slate-100 line-clamp-3 leading-snug">--</h3>
+                    <p id="summaryCategory" class="text-[10px] text-emerald-400 font-semibold mt-1">--</p>
+                    
+                    <div class="mt-6 space-y-2 border-t border-white/10 pt-4 text-[10px] text-slate-400">
+                        <div class="flex items-center gap-2"><i class="fas fa-user text-emerald-400 w-3"></i> <span id="userEmailPlaceholder" class="truncate">--</span></div>
+                        <div class="flex items-center gap-2"><i class="fas fa-history text-emerald-400 w-3"></i> Manual Verification Loop</div>
+                        <div class="flex items-center gap-2"><i class="fas fa-clock text-emerald-400 w-3"></i> Approval within 1-2 Hours</div>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-white/10 mt-6">
+                    <p class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">Net Amount Payable</p>
+                    <div class="flex items-baseline gap-1.5 mt-0.5">
+                        <span id="summaryPrice" class="text-3xl font-black text-emerald-400">₹0</span>
+                        <span id="summaryOriginalPrice" class="text-xs text-slate-500 line-through">₹0</span>
+                    </div>
+                    <p id="promoSuccessBadge" class="text-[10px] text-emerald-400 font-bold mt-1 hidden"><i class="fas fa-check-circle"></i> 5% Affiliate Discount Applied!</p>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 p-6 flex flex-col bg-white justify-between gap-4">
+                
+                <div class="flex flex-col items-center text-center">
+                    <div class="w-full max-w-[150px] aspect-square bg-slate-50 border border-slate-200 rounded-xl p-2 flex items-center justify-center relative shadow-sm">
+                        <img id="qrCodeTarget" src="" class="w-full h-full object-contain filter blur-md select-none pointer-events-none" alt="Secure Checkout UPI QR">
+                        <div id="qrSecureOverlay" class="absolute inset-0 bg-slate-950/80 backdrop-blur-xs rounded-xl flex flex-col items-center justify-center p-2 text-white">
+                            <i class="fas fa-lock text-xl text-amber-500 animate-pulse mb-1"></i>
+                            <p class="text-[9px] font-bold tracking-wider uppercase">Generating QR</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 text-left w-full space-y-2 bg-slate-50 p-3 rounded-xl border border-slate-100">
+                        <h4 class="text-xs font-black text-slate-900 uppercase tracking-wider mb-1 text-center"><i class="fas fa-list-ol text-emerald-600 mr-1"></i> Follow These Steps:</h4>
+                        <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Step 1:</strong> Scan the QR code using any UPI app (GPay, PhonePe, Paytm, BHIM) and complete the locked amount transaction.</p>
+                        <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Step 2:</strong> Copy the 12-digit <span class="text-emerald-600 font-bold">UTR / Transaction ID / Ref No.</span> from your payment receipt.</p>
+                        <p class="text-[11px] text-slate-600"><strong class="text-slate-900">Step 3:</strong> Paste that ID in the box below and click "Submit Verification Request".</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1.5">
+                    <label class="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Have a Promo / Affiliate Code?</label>
+                    <div class="flex gap-2">
+                        <div class="relative flex-grow">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i class="fas fa-tags"></i></span>
+                            <input type="text" id="promoInputField" placeholder="ENTER CODE" class="w-full text-xs border border-slate-200 pl-9 pr-3 py-2 rounded-lg focus:outline-emerald-600 focus:border-emerald-600 bg-white font-bold tracking-wider uppercase">
+                        </div>
+                        <button onclick="applyPromoLogic()" id="promoApplyBtn" class="bg-slate-900 hover:bg-slate-800 text-white font-bold text-[11px] uppercase tracking-wider px-4 py-2 rounded-lg transition cursor-pointer">Apply</button>
+                    </div>
+                    <p id="promoMessage" class="text-[10px] font-bold hidden"></p>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-black text-slate-500 uppercase tracking-wider block">Enter 12-Digit UTR / Transaction Reference Number</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs"><i class="fas fa-receipt"></i></span>
+                            <input type="text" id="utrInputField" maxlength="12" placeholder="e.g. 3405XXXXXXXX" class="w-full text-xs border border-slate-200 pl-9 pr-3 py-2.5 rounded-lg focus:outline-emerald-600 focus:border-emerald-600 bg-slate-50 font-mono tracking-widest uppercase">
+                        </div>
+                        <p id="utrErrorMessage" class="text-[10px] text-red-500 font-bold hidden"></p>
+                    </div>
+
+                    <button onclick="submitUtrRequest()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider py-3 rounded-lg transition mt-3 flex items-center justify-center gap-1.5 shadow-md cursor-pointer">
+                        <i class="fas fa-paper-plane"></i> Submit Verification Request
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 text-slate-600 py-4 text-[10px] text-center border-t border-slate-900 w-full">
+        <p>&copy; 2026 Skills Syndicate Security Gateway. Safe & Fully Compliant.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        let currentActiveUserEmail = "";
+        let globalCourseId = "";
+        let globalReferralCode = ""; 
+        let courseBasePrice = 0; 
+        let dynamicCalculatedPrice = 0;
+        let finalAppliedPromo = "none";
+
+        function extractParamFromQuery(key) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(key) || ""; 
+        }
+
+        auth.onAuthStateChanged((user) => {
+            const targetCourseId = extractParamFromQuery('course');
+            globalReferralCode = extractParamFromQuery('ref'); 
+            
+            // Auto-fill promo input field if affiliate tracking code exists in URL
+            if(globalReferralCode) {
+                document.getElementById('promoInputField').value = globalReferralCode.toUpperCase();
+            }
+
+            const localSessionData = localStorage.getItem('ss_user_session');
+
+            if (!user && !localSessionData) {
+                alert("ACCESS DENIED: Please complete login/signup parameters first.");
+                window.location.href = `course-single.html?course=${targetCourseId || ''}`;
+                return;
+            }
+
+            if (user && user.email) {
+                currentActiveUserEmail = user.email;
+            } else if (localSessionData) {
+                try {
+                    currentActiveUserEmail = JSON.parse(localSessionData).email || "unknown_user";
+                } catch(e) {
+                    currentActiveUserEmail = "unknown_user";
+                }
+            } else {
+                currentActiveUserEmail = "unknown_user";
+            }
+
+            document.getElementById('userEmailPlaceholder').innerText = currentActiveUserEmail;
+
+            if (!targetCourseId) {
+                alert("Context Route Defect: Course parameters missing.");
+                window.location.href = 'course.html';
+                return;
+            }
+
+            globalCourseId = targetCourseId;
+            executeSecureOrderValidation(targetCourseId);
+        });
+
+        function executeSecureOrderValidation(courseId) {
+            database.ref('courses/' + courseId).once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    alert("Data Node Defect: Target course not localized inside database.");
+                    window.location.href = 'course.html';
+                    return;
+                }
+
+                const transactionNode = snapshot.val() || {};
+                
+                document.getElementById('summaryTitle').innerText = transactionNode.title || "Operations Blueprint";
+                document.getElementById('summaryCategory').innerText = transactionNode.category || "Skill Ecosystem";
+                
+                courseBasePrice = transactionNode.price !== undefined ? Number(transactionNode.price) : 0;
+                dynamicCalculatedPrice = courseBasePrice; 
+                const originalPrice = transactionNode.originalPrice || "4,999";
+
+                document.getElementById('summaryPrice').innerText = "₹" + dynamicCalculatedPrice;
+                document.getElementById('summaryOriginalPrice').innerText = "₹" + originalPrice;
+
+                // URL parameters se direct promo evaluate krna agar dynamic payload pehle se loaded ho
+                if(globalReferralCode) {
+                    applyPromoLogic();
+                } else {
+                    generateLockedPaymentQR(dynamicCalculatedPrice, courseId);
+                }
+
+            }).catch((err) => {
+                console.error("Pipeline Thread Exception: ", err);
+                alert("Network disruption inside core verification layers.");
+            });
+        }
+
+        // PROMO AND AFFILIATE VERIFICATION HANDLER
+        function applyPromoLogic() {
+            const enteredPromo = document.getElementById('promoInputField').value.trim().toUpperCase();
+            const msgBox = document.getElementById('promoMessage');
+            
+            msgBox.classList.add('hidden');
+            msgBox.className = "text-[10px] font-bold"; 
+
+            if(!enteredPromo) {
+                msgBox.innerText = "Please enter a structural coupon code.";
+                msgBox.classList.remove('hidden');
+                msgBox.classList.add('text-amber-500');
+                return;
+            }
+
+            // Realtime DB node structural validation node checking 'affiliates/' or 'promocodes/'
+            database.ref('affiliates/' + enteredPromo).once('value').then((snapshot) => {
+                if(snapshot.exists()) {
+                    // Affiliate User Verified Successfully -> Trigger 5% Logic
+                    finalAppliedPromo = enteredPromo;
+                    const discountValue = Math.round(courseBasePrice * 0.05);
+                    dynamicCalculatedPrice = courseBasePrice - discountValue;
+
+                    // UI Pricing update mapping
+                    document.getElementById('summaryPrice').innerText = "₹" + dynamicCalculatedPrice;
+                    document.getElementById('promoSuccessBadge').classList.remove('hidden');
+
+                    msgBox.innerText = `Success! Code applied. Verified Affiliate Partner: ${snapshot.val().name || 'Syndicate Member'}`;
+                    msgBox.classList.remove('hidden');
+                    msgBox.classList.add('text-emerald-600');
+
+                    // Regenerate QR with new Discounted Price instance
+                    generateLockedPaymentQR(dynamicCalculatedPrice, globalCourseId);
+                } else {
+                    // Fallback to normal if structural validation fails
+                    finalAppliedPromo = "none";
+                    dynamicCalculatedPrice = courseBasePrice;
+                    document.getElementById('summaryPrice').innerText = "₹" + dynamicCalculatedPrice;
+                    document.getElementById('promoSuccessBadge').classList.add('hidden');
+
+                    msgBox.innerText = "Invalid Promo or Affiliate Identifier code.";
+                    msgBox.classList.remove('hidden');
+                    msgBox.classList.add('text-red-500');
+
+                    generateLockedPaymentQR(dynamicCalculatedPrice, globalCourseId);
+                }
+            }).catch(err => {
+                console.error(err);
+                generateLockedPaymentQR(dynamicCalculatedPrice, globalCourseId);
+            });
+        }
+
+        function generateLockedPaymentQR(verifiedPrice, verifiedCourseId) {
+            const payeeVPA = "adityahard@fam"; 
+            const payeeName = "Skills Syndicate";
+            
+            const secureUpiString = `upi://pay?pa=${payeeVPA}&pn=${encodeURIComponent(payeeName)}&am=${verifiedPrice}&cu=INR&tn=${encodeURIComponent('Course_' + verifiedCourseId)}`;
+            const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(secureUpiString)}&ecc=M`;
+            
+            const qrElement = document.getElementById('qrCodeTarget');
+            qrElement.src = qrApiUrl;
+
+            qrElement.onload = function() {
+                document.getElementById('qrSecureOverlay').classList.add('hidden');
+                qrElement.classList.remove('blur-md');
+                document.getElementById('paymentLoader').classList.add('hidden');
+                document.getElementById('paymentWorkspace').classList.remove('hidden');
+            };
+        }
+
+        function submitUtrRequest() {
+            const utrInput = document.getElementById('utrInputField').value.trim();
+            const errorBox = document.getElementById('utrErrorMessage');
+
+            errorBox.classList.add('hidden');
+            errorBox.innerText = "";
+
+            if (utrInput.length !== 12 || isNaN(utrInput)) {
+                errorBox.innerText = "Error: Please provide a valid 12-digit structural numeric transaction ID.";
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            const requestPayload = {
+                userEmail: currentActiveUserEmail,
+                courseId: globalCourseId,
+                utrId: utrInput,
+                referralCode: globalReferralCode || "none",
+                appliedPromoCode: finalAppliedPromo, // Store promo mapping context
+                payableAmount: dynamicCalculatedPrice, // Store actual amount user paid after discount
+                timestamp: Date.now(),
+                status: "pending" 
+            };
+
+            database.ref('payment_requests').push(requestPayload).then(() => {
+                alert("SUCCESS! Your payment verification request has been successfully queued. Access parameters will unlock shortly upon manual cross-check clearance verification.");
+                window.location.href = 'index.html';
+            }).catch(err => {
+                alert("Database Exception: Request logging failed. Try again.");
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>

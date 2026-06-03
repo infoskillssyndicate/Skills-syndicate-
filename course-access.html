@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Access | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfc; }
+        
+        .module-item { transition: all 0.3s ease; cursor: pointer; }
+        .module-item:hover { background: #f0fdf4; border-left: 3px solid #059669; }
+        .module-item.active { background: #f0fdf4; border-left: 3px solid #059669; }
+        
+        .lesson-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+        .lesson-content.open { max-height: 500px; }
+        
+        .video-placeholder { transition: all 0.3s ease; }
+        .video-placeholder:hover { transform: scale(1.02); }
+        
+        .progress-bar { transition: width 0.5s ease; }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="dashboard.html" class="text-[11px] font-bold text-slate-600 hover:text-emerald-600 transition">
+                    <i class="fas fa-th-large mr-1"></i> Dashboard
+                </a>
+                <button onclick="logoutUser()" class="bg-red-100 hover:bg-red-200 text-red-600 text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg transition cursor-pointer">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-gradient-to-r from-slate-950 to-emerald-950 text-white py-6">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="text-[9px] font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded" id="courseCategory">Loading...</span>
+                    <h1 class="text-lg md:text-xl font-extrabold mt-2 tracking-tight" id="courseTitle">Loading Workspace Blueprint...</h1>
+                    <p class="text-slate-400 text-[11px] mt-1" id="courseInstructor">Instructor: --</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] text-slate-400">Workspace Status</p>
+                    <div class="w-40 h-2 bg-slate-700 rounded-full mt-1">
+                        <div class="progress-bar h-full bg-emerald-500 rounded-full" style="width: 100%"></div>
+                    </div>
+                    <p class="text-[10px] text-emerald-400 mt-1">100% Verified Access</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-4 py-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 sticky top-20">
+                    <h3 class="text-sm font-extrabold text-slate-900 mb-4">
+                        <i class="fas fa-list-ol text-emerald-600 mr-1"></i> Syllabus Blueprint
+                    </h3>
+                    
+                    <div class="space-y-2" id="moduleList">
+                        <p class="text-xs text-slate-400 text-center py-4">Streaming module blocks...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2">
+                
+                <div class="bg-slate-950 rounded-xl overflow-hidden mb-4 video-placeholder">
+                    <div class="aspect-video flex items-center justify-center bg-slate-900 relative" id="videoWrapper">
+                        <div class="text-center p-4">
+                            <i class="fas fa-play-circle text-5xl text-emerald-500 mb-3"></i>
+                            <p class="text-white text-sm font-bold" id="videoPlaceholderTitle">Click any lesson on the left to stream content</p>
+                            <p class="text-slate-400 text-[10px] mt-1">Secure Syndicate Player Engine</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+                    <h3 class="text-sm font-extrabold text-slate-900">📖 Core Architecture & Assets</h3>
+                    <p class="text-xs text-slate-600 mt-2 leading-relaxed" id="courseDescription">
+                        Loading blueprint parameters from live database clusters...
+                    </p>
+                    
+                    <div class="mt-4 p-3 bg-slate-50 rounded-lg">
+                        <p class="text-[10px] font-bold text-slate-700 mb-2">📁 Private Vault Assets</p>
+                        <div class="flex flex-wrap gap-4" id="resourceLinksContainer">
+                            <span class="text-xs text-slate-400">Loading verified asset links...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-slate-500 py-6 text-[11px] mt-8">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const rtdb = firebase.database();
+
+        let activeCourseData = null;
+
+        // Toggle Accordion Module
+        function toggleModule(modId) {
+            const content = document.getElementById(modId);
+            const icon = document.getElementById('icon-' + modId);
+            const moduleItem = content.previousElementSibling;
+            
+            if (content.classList.contains('open')) {
+                content.classList.remove('open');
+                icon.style.transform = 'rotate(0deg)';
+                moduleItem.classList.remove('active', 'bg-emerald-50', 'border-emerald-500');
+                moduleItem.classList.add('border-transparent');
+            } else {
+                content.classList.add('open');
+                icon.style.transform = 'rotate(180deg)';
+                moduleItem.classList.add('active', 'bg-emerald-50', 'border-emerald-500');
+                moduleItem.classList.remove('border-transparent');
+            }
+        }
+
+        // Play Dynamic Video URL inside Sandbox Player
+        function playSyndicateVideo(lessonTitle, rawUrl) {
+            const wrapper = document.getElementById('videoWrapper');
+            if (!rawUrl || rawUrl.trim() === "") {
+                wrapper.innerHTML = `
+                    <div class="text-center p-4">
+                        <i class="fas fa-exclamation-circle text-4xl text-amber-500 mb-2"></i>
+                        <p class="text-white text-xs font-bold">${lessonTitle}</p>
+                        <p class="text-slate-400 text-[10px] mt-1">No video streaming endpoint configured for this node.</p>
+                    </div>`;
+                return;
+            }
+
+            // Simple transformation array to convert common watch links into embed formats
+            let embedUrl = rawUrl;
+            if(embedUrl.includes("youtube.com/watch?v=")) {
+                embedUrl = embedUrl.replace("youtube.com/watch?v=", "youtube.com/embed/");
+            } else if(embedUrl.includes("youtu.be/")) {
+                embedUrl = embedUrl.replace("youtu.be/", "youtube.com/embed/");
+            }
+
+            wrapper.innerHTML = `
+                <iframe src="${embedUrl}" class="w-full h-full border-0 absolute top-0 left-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            `;
+        }
+
+        // Verify Safety Wall and Stream Architecture Elements
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Get targeted Course Key from window URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetCourseId = urlParams.get('course');
+
+            if (!targetCourseId) {
+                alert("Missing course structural matrix identity parameters.");
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
+            // GATEKEEPER CHECK: Ensure user has a valid 'approved' state inside RTDB before rendering content
+            rtdb.ref('payment_requests').once('value').then((snapshot) => {
+                let isAccessGranted = false;
+
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnap) => {
+                        const req = childSnap.val();
+                        if (req.userEmail === user.email && req.courseId === targetCourseId && req.status === 'approved') {
+                            isAccessGranted = true;
+                        }
+                    });
+                }
+
+                if (!isAccessGranted) {
+                    alert("Unauthorized Access Attempt. Payment node verification missing or rejected.");
+                    window.location.href = 'dashboard.html';
+                    return;
+                }
+
+                // Step 2: Access verified. Now load full content details from database
+                loadVerifiedCourseContent(targetCourseId);
+            });
+        });
+
+        function loadVerifiedCourseContent(courseId) {
+            rtdb.ref('courses/' + courseId).once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    document.getElementById('courseTitle').textContent = "Course Node Not Found In Database";
+                    return;
+                }
+
+                const data = snapshot.val();
+                activeCourseData = data;
+
+                // Sync Header Layout Elements
+                document.getElementById('courseTitle').textContent = data.title || "Untitled Blueprint";
+                document.getElementById('courseCategory').textContent = data.category || "Core Training";
+                document.getElementById('courseInstructor').textContent = `Instructor: ${data.instructor ? data.instructor.name : 'Syndicate Network Mentor'}`;
+                document.getElementById('courseDescription').textContent = data.description || "No deep summary logs documented for this course blueprint model.";
+
+                // Sync Premium Resource Link Elements
+                const resourceContainer = document.getElementById('resourceLinksContainer');
+                resourceContainer.innerHTML = ''; // Wipe loader
+
+                if (data.pdfUrl && data.pdfUrl.trim() !== "") {
+                    resourceContainer.insertAdjacentHTML('beforeend', `
+                        <a href="${data.pdfUrl}" target="_blank" class="text-[11px] text-emerald-600 font-bold bg-white px-3 py-1.5 border border-slate-200 rounded-lg hover:border-emerald-500 shadow-2xs transition">
+                            <i class="far fa-file-pdf mr-1 text-red-500"></i> Premium Resources (Drive/Vault)
+                        </a>
+                    `);
+                }
+                if (data.supportUrl && data.supportUrl.trim() !== "") {
+                    resourceContainer.insertAdjacentHTML('beforeend', `
+                        <a href="${data.supportUrl}" target="_blank" class="text-[11px] text-emerald-600 font-bold bg-white px-3 py-1.5 border border-slate-200 rounded-lg hover:border-emerald-500 shadow-2xs transition">
+                            <i class="fab fa-whatsapp mr-1 text-emerald-500"></i> Secret Discord/WhatsApp Community
+                        </a>
+                    `);
+                }
+
+                if (resourceContainer.innerHTML === '') {
+                    resourceContainer.innerHTML = `<span class="text-xs text-slate-400 font-medium">No external source vaults added for this course.</span>`;
+                }
+
+                // Sync Dynamic Accordion Syllabus Structure Modules
+                const moduleList = document.getElementById('moduleList');
+                moduleList.innerHTML = ''; // Wipe loader
+
+                if (data.modules && data.modules.length > 0) {
+                    data.modules.forEach((mod, idx) => {
+                        let lessonsListHTML = '';
+                        
+                        if(mod.items && mod.items.length > 0) {
+                            mod.items.forEach((lessonName) => {
+                                // Defaulting each sub-item tap hook onto the primary preview URL configuration
+                                lessonsListHTML += `
+                                    <div onclick="playSyndicateVideo('${lessonName.replace(/'/g, "\\'")}', '${data.videoUrl || ''}')" class="flex items-center gap-2 text-[10px] text-slate-600 py-2 px-1 hover:bg-emerald-50/50 hover:text-emerald-700 rounded-md cursor-pointer transition">
+                                        <i class="far fa-play-circle text-emerald-500 text-xs"></i> ${lessonName}
+                                    </div>
+                                `;
+                            });
+                        } else {
+                            lessonsListHTML = `<p class="text-[10px] text-slate-400 p-1">No lessons logged under this block.</p>`;
+                        }
+
+                        const moduleBlockHTML = `
+                            <div>
+                                <div class="module-item flex justify-between items-center p-3 rounded-lg border-l-3 border-transparent bg-slate-50 border border-slate-100" onclick="toggleModule('${mod.id || 'mod-' + idx}')">
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-900">${mod.title}</p>
+                                        <p class="text-[9px] text-slate-400">${mod.items ? mod.items.length : 0} Streaming Blocks Available</p>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-slate-400 text-xs transition-transform" id="icon-${mod.id || 'mod-' + idx}"></i>
+                                </div>
+                                <div class="lesson-content pl-3 pr-1 space-y-0.5 mt-1" id="${mod.id || 'mod-' + idx}">
+                                    ${lessonsListHTML}
+                                </div>
+                            </div>
+                        `;
+                        moduleList.insertAdjacentHTML('beforeend', moduleBlockHTML);
+                    });
+
+                    // Auto expand the very first module on successful stream load
+                    const firstModId = data.modules[0].id || 'mod-0';
+                    toggleModule(firstModId);
+                } else {
+                    moduleList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">No structured blueprint modules verified for this course asset.</p>`;
+                }
+            });
+        }
+
+        function logoutUser() {
+            auth.signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+    </script>
+</body>
+</html>

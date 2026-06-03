@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliate Program | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfcfc; 
+        }
+        
+        .commission-card {
+            transition: all 0.3s ease;
+        }
+        
+        .commission-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(5, 150, 105, 0.15);
+        }
+        
+        .step-card {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .step-card:hover {
+            transform: translateX(8px);
+        }
+        
+        .step-number {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover .step-number {
+            background: #059669;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .benefit-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: rotateY(360deg);
+            color: #059669;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 300px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(5, 150, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0); }
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <nav class="hidden md:flex space-x-5 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="index.html" class="hover:text-emerald-600 transition">Home</a>
+                <a href="index.html#courses" class="hover:text-emerald-600 transition">Courses</a>
+                <a href="about.html" class="hover:text-emerald-600 transition">About</a>
+                <a href="blog.html" class="hover:text-emerald-600 transition">Blogs</a>
+                <a href="contact.html" class="hover:text-emerald-600 transition">Contact</a>
+            </nav>
+            <a href="index.html" class="bg-slate-900 hover:bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded transition">
+                <i class="fas fa-arrow-left mr-1"></i> Back Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+                <div>
+                    <span class="inline-flex items-center gap-2 bg-yellow-500/20 text-yellow-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-yellow-500/30">
+                        <i class="fas fa-hand-holding-usd text-xs"></i> Earn With Us
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold mt-4 tracking-tight leading-tight">
+                        Earn <span class="text-emerald-400">30% Commission</span> By Sharing What You Love
+                    </h1>
+                    <p class="text-slate-300 text-sm mt-4 max-w-lg leading-relaxed">
+                        Join the Skills Syndicate Affiliate Program and earn passive income by recommending our premium courses. No investment, no inventory, just pure commission on every successful referral.
+                    </p>
+                    
+                    <!-- Quick Stats -->
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <div class="bg-white/10 rounded-lg px-4 py-3 text-center">
+                            <h3 class="text-xl font-extrabold text-emerald-400">₹2.5L+</h3>
+                            <p class="text-[10px] text-slate-400">Monthly Payouts</p>
+                        </div>
+                        <div class="bg-white/10 rounded-lg px-4 py-3 text-center">
+                            <h3 class="text-xl font-extrabold text-emerald-400">850+</h3>
+                            <p class="text-[10px] text-slate-400">Active Affiliates</p>
+                        </div>
+                        <div class="bg-white/10 rounded-lg px-4 py-3 text-center">
+                            <h3 class="text-xl font-extrabold text-emerald-400">30%</h3>
+                            <p class="text-[10px] text-slate-400">Commission Rate</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3 mt-6">
+                        <a href="#signup" class="pulse-btn bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg transition">
+                            Join Now - It's Free
+                        </a>
+                        <a href="#how-it-works" class="bg-transparent border-2 border-white/30 hover:border-white text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg transition">
+                            How It Works
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Visual -->
+                <div class="hidden lg:block">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+                        <p class="text-[10px] text-slate-400 uppercase tracking-wider mb-3">📊 Top Affiliate Earnings This Month</p>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between bg-white/5 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">Rahul K.</p>
+                                        <p class="text-[9px] text-slate-400">120 sales</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-extrabold text-emerald-400">₹35,880</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-white/5 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-slate-500 rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">Priya M.</p>
+                                        <p class="text-[9px] text-slate-400">95 sales</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-extrabold text-emerald-400">₹28,405</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-white/5 p-3 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 bg-orange-700 rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                                    <div>
+                                        <p class="text-xs font-bold text-white">Amit S.</p>
+                                        <p class="text-[9px] text-slate-400">78 sales</p>
+                                    </div>
+                                </div>
+                                <span class="text-sm font-extrabold text-emerald-400">₹23,322</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="max-w-6xl mx-auto px-4 py-12">
+        <div class="text-center mb-8">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Simple Process</p>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">How The Affiliate Program Works</h2>
+            <p class="text-slate-500 text-sm mt-2 max-w-lg mx-auto">Start earning in 4 simple steps. No technical skills required.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+            <!-- Step 1 -->
+            <div class="step-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                <div class="step-number w-12 h-12 flex items-center justify-center bg-emerald-100 text-emerald-700 rounded-full mx-auto mb-4 text-lg font-extrabold">1</div>
+                <h4 class="text-sm font-bold text-slate-900">Sign Up Free</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Fill the form below. Get approved within 24 hours. Zero investment required.</p>
+            </div>
+            
+            <!-- Step 2 -->
+            <div class="step-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                <div class="step-number w-12 h-12 flex items-center justify-center bg-emerald-100 text-emerald-700 rounded-full mx-auto mb-4 text-lg font-extrabold">2</div>
+                <h4 class="text-sm font-bold text-slate-900">Get Your Link</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Receive unique tracking links for each course. Share anywhere you like.</p>
+            </div>
+            
+            <!-- Step 3 -->
+            <div class="step-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                <div class="step-number w-12 h-12 flex items-center justify-center bg-emerald-100 text-emerald-700 rounded-full mx-auto mb-4 text-lg font-extrabold">3</div>
+                <h4 class="text-sm font-bold text-slate-900">Promote Courses</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Share on YouTube, Instagram, WhatsApp, blogs, or with friends directly.</p>
+            </div>
+            
+            <!-- Step 4 -->
+            <div class="step-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                <div class="step-number w-12 h-12 flex items-center justify-center bg-emerald-100 text-emerald-700 rounded-full mx-auto mb-4 text-lg font-extrabold">4</div>
+                <h4 class="text-sm font-bold text-slate-900">Earn Commission</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Get 30% on every sale. Payouts every month via UPI or bank transfer.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commission Structure -->
+    <section class="bg-slate-50 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Earning Potential</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Commission Structure</h2>
+                <p class="text-slate-500 text-sm mt-2 max-w-lg mx-auto">The more you sell, the more you earn. Simple as that.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Commission Card 1 -->
+                <div class="commission-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                    <div class="w-14 h-14 flex items-center justify-center bg-orange-100 rounded-full mx-auto mb-4">
+                        <i class="fas fa-star text-2xl text-orange-500"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Starter</h4>
+                    <p class="text-[10px] text-slate-400">0-50 sales/month</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-3">30%</h3>
+                    <p class="text-xs text-slate-500 mt-1">Commission per sale</p>
+                    <div class="bg-slate-50 rounded-lg p-3 mt-4">
+                        <p class="text-[10px] text-slate-500">Potential Earnings</p>
+                        <p class="text-lg font-extrabold text-emerald-600">Up to ₹7,500/mo</p>
+                    </div>
+                </div>
+                
+                <!-- Commission Card 2 -->
+                <div class="commission-card bg-white rounded-xl border-2 border-emerald-500 shadow-lg p-6 text-center relative">
+                    <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-[9px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">Most Popular</span>
+                    <div class="w-14 h-14 flex items-center justify-center bg-emerald-100 rounded-full mx-auto mb-4">
+                        <i class="fas fa-crown text-2xl text-emerald-600"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Pro</h4>
+                    <p class="text-[10px] text-slate-400">51-150 sales/month</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-3">35%</h3>
+                    <p class="text-xs text-slate-500 mt-1">Commission per sale</p>
+                    <div class="bg-emerald-50 rounded-lg p-3 mt-4">
+                        <p class="text-[10px] text-slate-500">Potential Earnings</p>
+                        <p class="text-lg font-extrabold text-emerald-600">Up to ₹26,250/mo</p>
+                    </div>
+                </div>
+                
+                <!-- Commission Card 3 -->
+                <div class="commission-card bg-white rounded-xl border border-slate-100 shadow-sm p-6 text-center">
+                    <div class="w-14 h-14 flex items-center justify-center bg-purple-100 rounded-full mx-auto mb-4">
+                        <i class="fas fa-gem text-2xl text-purple-600"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Elite</h4>
+                    <p class="text-[10px] text-slate-400">150+ sales/month</p>
+                    <h3 class="text-3xl font-extrabold text-slate-900 mt-3">40%</h3>
+                    <p class="text-xs text-slate-500 mt-1">Commission per sale</p>
+                    <div class="bg-slate-50 rounded-lg p-3 mt-4">
+                        <p class="text-[10px] text-slate-500">Potential Earnings</p>
+                        <p class="text-lg font-extrabold text-emerald-600">₹30,000+/mo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="text-center mb-8">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Why Join Us</p>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Affiliate Benefits</h2>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="benefit-card bg-white rounded-xl border border-slate-100 shadow-sm p-5 text-center">
+                <div class="benefit-icon w-12 h-12 flex items-center justify-center bg-emerald-50 rounded-xl mx-auto mb-3 text-emerald-600 text-xl">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900">Real-Time Tracking</h4>
+                <p class="text-[10px] text-slate-500 mt-1">Live dashboard to track clicks, conversions & earnings.</p>
+            </div>
+            <div class="benefit-card bg-white rounded-xl border border-slate-100 shadow-sm p-5 text-center">
+                <div class="benefit-icon w-12 h-12 flex items-center justify-center bg-blue-50 rounded-xl mx-auto mb-3 text-blue-600 text-xl">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900">Monthly Payouts</h4>
+                <p class="text-[10px] text-slate-500 mt-1">Direct bank transfer or UPI every 1st week of month.</p>
+            </div>
+            <div class="benefit-card bg-white rounded-xl border border-slate-100 shadow-sm p-5 text-center">
+                <div class="benefit-icon w-12 h-12 flex items-center justify-center bg-purple-50 rounded-xl mx-auto mb-3 text-purple-600 text-xl">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900">Marketing Kit</h4>
+                <p class="text-[10px] text-slate-500 mt-1">Ready-to-use banners, videos & social media content.</p>
+            </div>
+            <div class="benefit-card bg-white rounded-xl border border-slate-100 shadow-sm p-5 text-center">
+                <div class="benefit-icon w-12 h-12 flex items-center justify-center bg-orange-50 rounded-xl mx-auto mb-3 text-orange-600 text-xl">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h4 class="text-xs font-bold text-slate-900">Dedicated Support</h4>
+                <p class="text-[10px] text-slate-500 mt-1">Personal affiliate manager to help you maximize earnings.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="bg-slate-50 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Success Stories</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">What Our Affiliates Say</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition">
+                    <div class="flex text-yellow-400 text-sm mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">
+                        "I started with zero followers on Instagram. Using the marketing kit, I made ₹15,000 in my first month itself. The tracking dashboard is super helpful!"
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                        <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 font-bold text-xs">AK</div>
+                        <div>
+                            <h5 class="text-xs font-bold text-slate-900">Ankit Kumar</h5>
+                            <p class="text-[10px] text-slate-400">Student Affiliate</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition">
+                    <div class="flex text-yellow-400 text-sm mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">
+                        "As a YouTuber, this affiliate program is a perfect fit. I earn ₹40K+ monthly just by adding links in my video descriptions. Highly recommended!"
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 font-bold text-xs">NS</div>
+                        <div>
+                            <h5 class="text-xs font-bold text-slate-900">Neha Sharma</h5>
+                            <p class="text-[10px] text-slate-400">Tech YouTuber (50K subs)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6 hover:shadow-md transition">
+                    <div class="flex text-yellow-400 text-sm mb-3">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-xs text-slate-600 leading-relaxed italic">
+                        "I run a WhatsApp group for developers. Sharing course links there alone generates ₹25K/month. Skills Syndicate's affiliate program is a goldmine!"
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-xs">RP</div>
+                        <div>
+                            <h5 class="text-xs font-bold text-slate-900">Raj Patel</h5>
+                            <p class="text-[10px] text-slate-400">Community Builder</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Form -->
+    <section id="signup" class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Get Started</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Join The Affiliate Program</h2>
+                <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                    Fill the form and our team will review your application within 24 hours. Once approved, you'll get access to your affiliate dashboard with unique tracking links.
+                </p>
+                
+                <div class="space-y-3 mt-5">
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <p class="text-xs text-slate-600"><strong>No investment required.</strong> Completely free to join.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <p class="text-xs text-slate-600"><strong>30% base commission</strong> on every course sale.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <p class="text-xs text-slate-600"><strong>Lifetime attribution.</strong> If someone buys within 30 days of clicking your link, you get credit.</p>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <p class="text-xs text-slate-600"><strong>Monthly payouts</strong> via UPI or bank transfer.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-lg p-6">
+                <h3 class="text-sm font-bold text-slate-900 mb-4">Affiliate Application Form</h3>
+                <form id="affiliateForm" onsubmit="handleAffiliateSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Full Name *</label>
+                        <input type="text" required placeholder="Enter your name" class="w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-emerald-600">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Email Address *</label>
+                        <input type="email" required placeholder="your@email.com" class="w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-emerald-600">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Phone Number *</label>
+                        <input type="tel" required placeholder="+91 98765 43210" class="w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-emerald-600">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">How Will You Promote? *</label>
+                        <select required class="w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-emerald-600 bg-white">
+                            <option value="">Select platform</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="whatsapp">WhatsApp / Telegram</option>
+                            <option value="blog">Blog / Website</option>
+                            <option value="friends">Friends & Family</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Your Reach (Optional)</label>
+                        <input type="text" placeholder="Eg: 10K YouTube subscribers, 5K Instagram followers" class="w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none focus:border-emerald-600">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider py-3 rounded-lg transition">
+                        <i class="fas fa-rocket mr-1"></i> Submit Application
+                    </button>
+                    <p class="text-[10px] text-slate-400 text-center">We'll review and approve within 24 hours.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="bg-slate-50 py-12">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="text-center mb-6">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Questions</p>
+                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight mt-1">Affiliate FAQ</h2>
+            </div>
+            <div class="space-y-2">
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50" onclick="toggleFAQ('aff-faq1', this)">
+                        <h4 class="text-sm font-bold text-slate-900">Is it free to join?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-aff-faq1"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="aff-faq1" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;">
+                        <p class="text-xs text-slate-600 leading-relaxed pb-3">Yes! Joining the affiliate program is 100% free. No hidden charges, no investment required.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50" onclick="toggleFAQ('aff-faq2', this)">
+                        <h4 class="text-sm font-bold text-slate-900">When do I get paid?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-aff-faq2"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="aff-faq2" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;">
+                        <p class="text-xs text-slate-600 leading-relaxed pb-3">Payouts are processed monthly, within the first week of every month, via UPI or bank transfer. Minimum payout threshold is ₹500.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50" onclick="toggleFAQ('aff-faq3', this)">
+                        <h4 class="text-sm font-bold text-slate-900">How is tracking done?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-aff-faq3"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="aff-faq3" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;">
+                        <p class="text-xs text-slate-600 leading-relaxed pb-3">You get unique tracking links. When someone clicks your link and purchases within 30 days, the sale is attributed to you. Our system uses cookies for accurate tracking.</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="flex justify-between items-center p-4 cursor-pointer hover:bg-slate-50" onclick="toggleFAQ('aff-faq4', this)">
+                        <h4 class="text-sm font-bold text-slate-900">Can I promote multiple courses?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-aff-faq4"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="aff-faq4" style="max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.4s ease;">
+                        <p class="text-xs text-slate-600 leading-relaxed pb-3">Absolutely! You get unique links for all our courses. Promote as many as you want and earn commission on every sale.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-8 text-[11px]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-2">Skills Syndicate</h4>
+                    <p class="leading-relaxed text-xs">Premium skill acquisition platform for the modern digital professional.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Quick Links</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="index.html" class="hover:text-emerald-400 transition">Home</a></li>
+                        <li><a href="index.html#courses" class="hover:text-emerald-400 transition">Courses</a></li>
+                        <li><a href="about.html" class="hover:text-emerald-400 transition">About</a></li>
+                        <li><a href="blog.html" class="hover:text-emerald-400 transition">Blogs</a></li>
+                        <li><a href="contact.html" class="hover:text-emerald-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Programs</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="affiliate.html" class="text-emerald-400">Affiliate Program</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Freelancing Hub</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Skill Development</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Student Programs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Connect</h5>
+                    <div class="flex space-x-3 text-base">
+                        <a href="https://instagram.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 text-center">
+                <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(faqId, element) {
+            const answer = document.getElementById(faqId);
+            const icon = document.getElementById('icon-' + faqId);
+            
+            if (answer.style.maxHeight === '0px' || answer.style.maxHeight === '') {
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+                answer.style.paddingTop = '12px';
+                answer.style.paddingBottom = '12px';
+                icon.style.transform = 'rotate(45deg)';
+                icon.classList.replace('fa-plus', 'fa-minus');
+            } else {
+                answer.style.maxHeight = '0px';
+                answer.style.paddingTop = '0px';
+                answer.style.paddingBottom = '0px';
+                icon.style.transform = 'rotate(0deg)';
+                icon.classList.replace('fa-minus', 'fa-plus');
+            }
+        }
+        
+        function handleAffiliateSubmit(event) {
+            event.preventDefault();
+            const form = document.getElementById('affiliateForm');
+            alert('✅ Application Submitted Successfully!\n\nThank you for applying to the Skills Syndicate Affiliate Program. Our team will review your application and get back to you within 24 hours.');
+            form.reset();
+        }
+    </script>
+</body>
+</html>

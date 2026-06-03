@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfcfc; 
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.1);
+        }
+        
+        .contact-card:hover .contact-icon {
+            background: #059669;
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .contact-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+        
+        .faq-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .faq-item:hover {
+            background: #f0fdf4;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 200px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+        }
+        
+        .social-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-5px);
+        }
+        
+        .map-container {
+            filter: grayscale(30%);
+            transition: all 0.3s ease;
+        }
+        
+        .map-container:hover {
+            filter: grayscale(0%);
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <nav class="hidden md:flex space-x-5 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="index.html" class="hover:text-emerald-600 transition">Home</a>
+                <a href="index.html#courses" class="hover:text-emerald-600 transition">Courses</a>
+                <a href="about.html" class="hover:text-emerald-600 transition">About</a>
+                <a href="blog.html" class="hover:text-emerald-600 transition">Blogs</a>
+                <a href="contact.html" class="text-emerald-600">Contact</a>
+            </nav>
+            <a href="index.html" class="bg-slate-900 hover:bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded transition">
+                <i class="fas fa-arrow-left mr-1"></i> Back Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white py-14">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <span class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/30">
+                <i class="fas fa-headset text-xs"></i> We're Here To Help
+            </span>
+            <h1 class="text-3xl md:text-4xl font-extrabold mt-4 tracking-tight leading-tight">
+                Get In Touch With <span class="text-emerald-400">The Syndicate</span>
+            </h1>
+            <p class="text-slate-300 text-sm mt-3 max-w-lg mx-auto leading-relaxed">
+                Have questions about our courses, affiliate program, or freelancing opportunities? We'd love to hear from you.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Cards -->
+    <section class="max-w-6xl mx-auto px-4 -mt-8 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Email Card -->
+            <div class="contact-card bg-white rounded-xl border border-slate-100 shadow-lg p-6 text-center">
+                <div class="contact-icon w-14 h-14 flex items-center justify-center bg-red-100 rounded-xl mx-auto mb-4 text-red-600">
+                    <i class="fas fa-envelope text-2xl"></i>
+                </div>
+                <h3 class="text-sm font-bold text-slate-900">Email Us</h3>
+                <p class="text-xs text-slate-500 mt-1">We reply within 2 hours</p>
+                <a href="mailto:infoskillssyndicate@gmail.com" class="text-xs text-emerald-600 font-semibold hover:underline mt-2 block">infoskillssyndicate@gmail.com</a>
+                <a href="mailto:support@skillssyndicate.com" class="text-xs text-emerald-600 font-semibold hover:underline block">infoskillssyndicate@gmail.com</a>
+            </div>
+
+            <!-- Phone Card -->
+            <div class="contact-card bg-white rounded-xl border border-slate-100 shadow-lg p-6 text-center">
+                <div class="contact-icon w-14 h-14 flex items-center justify-center bg-green-100 rounded-xl mx-auto mb-4 text-green-600">
+                    <i class="fas fa-phone text-2xl"></i>
+                </div>
+                <h3 class="text-sm font-bold text-slate-900">Call Us</h3>
+                <p class="text-xs text-slate-500 mt-1">Mon-Sat, 10AM-7PM</p>
+                <a href="tel:+919876543210" class="text-xs text-emerald-600 font-semibold hover:underline mt-2 block">+917906704854</a>
+                <a href="tel:+919876543211" class="text-xs text-emerald-600 font-semibold hover:underline block">+91 9897180748 </a>
+            </div>
+
+            <!-- Location Card -->
+            <div class="contact-card bg-white rounded-xl border border-slate-100 shadow-lg p-6 text-center">
+                <div class="contact-icon w-14 h-14 flex items-center justify-center bg-blue-100 rounded-xl mx-auto mb-4 text-blue-600">
+                    <i class="fas fa-map-marker-alt text-2xl"></i>
+                </div>
+                <h3 class="text-sm font-bold text-slate-900">Visit Us</h3>
+                <p class="text-xs text-slate-500 mt-1">Our Office</p>
+                <p class="text-xs text-slate-700 mt-2 leading-relaxed">
+                    401, Tech Park Tower,<br>
+                    Andheri East, Mumbai - 400069<br>
+                    Maharashtra, India
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form + Map -->
+    <section class="max-w-6xl mx-auto px-4 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Contact Form -->
+            <div>
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                    <h2 class="text-xl font-extrabold text-slate-900 tracking-tight mb-1">Send Us A Message</h2>
+                    <p class="text-xs text-slate-500 mb-5">Fill the form below and we'll get back to you within 2 hours.</p>
+                    
+                    <form id="contactForm" onsubmit="handleSubmit(event)" class="space-y-4">
+                        <!-- Name -->
+                        <div>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Full Name *</label>
+                            <input type="text" required placeholder="Enter your full name" class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Email Address *</label>
+                            <input type="email" required placeholder="your@email.com" class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none">
+                        </div>
+                        
+                        <!-- Phone -->
+                        <div>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Phone Number</label>
+                            <input type="tel" placeholder="+91 98765 43210" class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none">
+                        </div>
+                        
+                        <!-- Subject -->
+                        <div>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Subject *</label>
+                            <select required class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none bg-white">
+                                <option value="">Select a topic</option>
+                                <option value="course">Course Inquiry</option>
+                                <option value="affiliate">Affiliate Program</option>
+                                <option value="freelancing">Freelancing Support</option>
+                                <option value="payment">Payment Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Message -->
+                        <div>
+                            <label class="text-[11px] font-bold uppercase tracking-wider text-slate-600 block mb-1">Message *</label>
+                            <textarea required rows="4" placeholder="Tell us how we can help you..." class="form-input w-full border border-slate-200 px-4 py-2.5 rounded-lg text-sm focus:outline-none resize-none"></textarea>
+                        </div>
+                        
+                        <!-- Submit -->
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm uppercase tracking-wider py-3 rounded-lg transition">
+                            <i class="fas fa-paper-plane mr-1"></i> Send Message
+                        </button>
+                        
+                        <p class="text-[10px] text-slate-400 text-center mt-2">
+                            By submitting, you agree to our <a href="#" class="text-emerald-600 hover:underline">Privacy Policy</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Map + Info -->
+            <div class="space-y-4">
+                <!-- Google Maps -->
+                <div class="map-container bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden h-64">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3769.5!2d72.85!3d19.12!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA3JzEyLjAiTiA3MsKwNTEnMDAuMCJF!5e0!3m2!1sen!2sin!4v1234567890" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                </div>
+                
+                <!-- Business Hours -->
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                    <h3 class="text-sm font-bold text-slate-900 mb-3">
+                        <i class="far fa-clock text-emerald-600 mr-1"></i> Business Hours
+                    </h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between py-1.5 border-b border-slate-50">
+                            <span class="text-slate-600">Monday - Friday</span>
+                            <span class="font-semibold text-slate-900">10:00 AM - 7:00 PM</span>
+                        </div>
+                        <div class="flex justify-between py-1.5 border-b border-slate-50">
+                            <span class="text-slate-600">Saturday</span>
+                            <span class="font-semibold text-slate-900">10:00 AM - 5:00 PM</span>
+                        </div>
+                        <div class="flex justify-between py-1.5">
+                            <span class="text-slate-600">Sunday</span>
+                            <span class="font-semibold text-red-500">Closed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                    <h3 class="text-sm font-bold text-slate-900 mb-3">
+                        <i class="fas fa-share-alt text-emerald-600 mr-1"></i> Connect With Us
+                    </h3>
+                    <div class="flex space-x-3">
+                        <a href="https://instagram.com" target="_blank" class="social-btn w-11 h-11 flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 rounded-xl shadow-lg">
+                            <i class="fab fa-instagram text-white text-lg"></i>
+                        </a>
+                        <a href="https://youtube.com" target="_blank" class="social-btn w-11 h-11 flex items-center justify-center bg-red-600 rounded-xl shadow-lg">
+                            <i class="fab fa-youtube text-white text-lg"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" class="social-btn w-11 h-11 flex items-center justify-center bg-slate-900 rounded-xl shadow-lg">
+                            <i class="fab fa-twitter text-white text-lg"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" class="social-btn w-11 h-11 flex items-center justify-center bg-blue-600 rounded-xl shadow-lg">
+                            <i class="fab fa-linkedin text-white text-lg"></i>
+                        </a>
+                        <a href="https://telegram.org" target="_blank" class="social-btn w-11 h-11 flex items-center justify-center bg-blue-400 rounded-xl shadow-lg">
+                            <i class="fab fa-telegram text-white text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="bg-slate-50 py-10">
+        <div class="max-w-3xl mx-auto px-4">
+            <div class="text-center mb-6">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Quick Answers</p>
+                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight mt-1">Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="space-y-2">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="faq-item flex justify-between items-center p-4" onclick="toggleFAQ('faq1', this)">
+                        <h4 class="text-sm font-bold text-slate-900">How can I enroll in a course?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-faq1"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="faq1">
+                        <p class="text-xs text-slate-600 leading-relaxed">Simply browse our courses, click "Enroll Now", and complete the payment. You'll get instant access to all course materials. We accept UPI, credit/debit cards, and net banking.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="faq-item flex justify-between items-center p-4" onclick="toggleFAQ('faq2', this)">
+                        <h4 class="text-sm font-bold text-slate-900">Do you offer refunds?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-faq2"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="faq2">
+                        <p class="text-xs text-slate-600 leading-relaxed">Yes! We offer a 7-day no-questions-asked money-back guarantee. If you're not satisfied, just email us and we'll process your full refund within 48 hours.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="faq-item flex justify-between items-center p-4" onclick="toggleFAQ('faq3', this)">
+                        <h4 class="text-sm font-bold text-slate-900">How does the affiliate program work?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-faq3"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="faq3">
+                        <p class="text-xs text-slate-600 leading-relaxed">Join our affiliate program, get a unique referral link, and earn 30% commission on every sale. We provide marketing materials, tracking dashboard, and monthly payouts via UPI/bank transfer.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="faq-item flex justify-between items-center p-4" onclick="toggleFAQ('faq4', this)">
+                        <h4 class="text-sm font-bold text-slate-900">Can I access courses on mobile?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-faq4"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="faq4">
+                        <p class="text-xs text-slate-600 leading-relaxed">Absolutely! All our courses are fully mobile-responsive. You can learn on your phone, tablet, or desktop. Video content is optimized for all screen sizes.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+                    <div class="faq-item flex justify-between items-center p-4" onclick="toggleFAQ('faq5', this)">
+                        <h4 class="text-sm font-bold text-slate-900">Do I get a certificate after completion?</h4>
+                        <i class="fas fa-plus text-emerald-600 text-xs transition-transform" id="icon-faq5"></i>
+                    </div>
+                    <div class="faq-answer px-4" id="faq5">
+                        <p class="text-xs text-slate-600 leading-relaxed">Yes! After completing all modules and projects, you'll receive a verified digital certificate from Skills Syndicate that you can share on LinkedIn and your resume.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-800 py-10">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-extrabold text-white tracking-tight">Still Have Questions?</h2>
+            <p class="text-emerald-100 text-sm mt-2">Our team is ready to help you. Reach out now!</p>
+            <div class="flex justify-center gap-3 mt-5">
+                <a href="mailto:infoskillssyndicate@gmail.com" class="bg-white text-emerald-700 font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg hover:bg-emerald-50 transition">
+                    <i class="fas fa-envelope mr-1"></i> Email Us
+                </a>
+                <a href="tel:+919876543210" class="bg-transparent border-2 border-white text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg hover:bg-white/10 transition">
+                    <i class="fas fa-phone mr-1"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-8 text-[11px]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-2">Skills Syndicate</h4>
+                    <p class="leading-relaxed text-xs">Premium skill acquisition platform for the modern digital professional.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Quick Links</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="index.html" class="hover:text-emerald-400 transition">Home</a></li>
+                        <li><a href="index.html#courses" class="hover:text-emerald-400 transition">Courses</a></li>
+                        <li><a href="about.html" class="hover:text-emerald-400 transition">About</a></li>
+                        <li><a href="blog.html" class="hover:text-emerald-400 transition">Blogs</a></li>
+                        <li><a href="contact.html" class="hover:text-emerald-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Programs</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#" class="hover:text-emerald-400 transition">Affiliate Program</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Freelancing Hub</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Skill Development</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Student Programs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Connect</h5>
+                    <div class="flex space-x-3 text-base">
+                        <a href="https://instagram.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-emerald-400 transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-emerald-400 transition">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle FAQ
+        function toggleFAQ(faqId, element) {
+            const answer = document.getElementById(faqId);
+            const icon = document.getElementById('icon-' + faqId);
+            
+            // Close all other FAQs
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                if (item.id !== faqId && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                    const otherIcon = document.getElementById('icon-' + item.id);
+                    if (otherIcon) {
+                        otherIcon.style.transform = 'rotate(0deg)';
+                        otherIcon.classList.replace('fa-minus', 'fa-plus');
+                    }
+                }
+            });
+            
+            // Toggle current FAQ
+            answer.classList.toggle('active');
+            
+            if (answer.classList.contains('active')) {
+                icon.style.transform = 'rotate(45deg)';
+                icon.classList.replace('fa-plus', 'fa-minus');
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+                icon.classList.replace('fa-minus', 'fa-plus');
+            }
+        }
+        
+        // Handle Form Submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const form = document.getElementById('contactForm');
+            const formData = new FormData(form);
+            
+            // Show success message
+            alert('✅ Message Sent Successfully!\n\nThank you for contacting Skills Syndicate. We will get back to you within 2 hours.');
+            
+            // Reset form
+            form.reset();
+            
+            // In real implementation, send to backend:
+            // fetch('/api/contact', { method: 'POST', body: formData });
+        }
+    </script>
+</body>
+</html>

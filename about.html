@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Skills Syndicate</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfcfc; 
+            overflow-x: hidden;
+        }
+        
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.15);
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-card:hover .team-img {
+            transform: scale(1.05);
+        }
+        
+        .team-img {
+            transition: transform 0.5s ease;
+        }
+        
+        .timeline-dot {
+            position: relative;
+        }
+        
+        .timeline-dot::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -30px;
+            width: 2px;
+            height: 30px;
+            background: #e2e8f0;
+            transform: translateX(-50%);
+        }
+        
+        .value-card {
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            border-color: #059669;
+            background: #f0fdf4;
+        }
+        
+        .value-card:hover .value-icon {
+            background: #059669;
+            color: white;
+        }
+        
+        .value-icon {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <!-- Navbar -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-50 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <nav class="hidden md:flex space-x-5 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="index.html" class="hover:text-emerald-600 transition">Home</a>
+                <a href="index.html#courses" class="hover:text-emerald-600 transition">Courses</a>
+                <a href="about.html" class="text-emerald-600">About</a>
+                <a href="blog.html" class="hover:text-emerald-600 transition">Blogs</a>
+                <a href="index.html#contact" class="hover:text-emerald-600 transition">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-800 rounded-full hover:bg-slate-200 transition">
+                    <i class="far fa-user text-sm"></i>
+                </a>
+                <a href="index.html" class="bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded transition">
+                    <i class="fas fa-arrow-left mr-1"></i> Back Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white py-16 md:py-20">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <span class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-emerald-500/30">
+                        <i class="fas fa-building text-xs"></i> Our Story
+                    </span>
+                    <h1 class="text-3xl md:text-5xl font-extrabold mt-4 tracking-tight leading-tight">
+                        We're Building The <span class="text-emerald-400">Future Of Digital Education</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base mt-4 max-w-lg leading-relaxed">
+                        Skills Syndicate isn't just another edtech platform. We're a movement of elite professionals who believe in practical, execution-focused skill acquisition that directly translates to income.
+                    </p>
+                    <div class="flex gap-4 mt-6 text-[11px]">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-emerald-400"></i>
+                            <span class="text-slate-300">Founded 2024</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-emerald-400"></i>
+                            <span class="text-slate-300">15,000+ Students</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-emerald-400"></i>
+                            <span class="text-slate-300">4.9/5 Rating</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="stat-card bg-white/10 rounded-xl p-5 text-center">
+                                <i class="fas fa-users text-3xl text-emerald-400 mb-2"></i>
+                                <h3 class="text-3xl font-extrabold text-white">15K+</h3>
+                                <p class="text-xs text-slate-400 mt-1">Active Students</p>
+                            </div>
+                            <div class="stat-card bg-white/10 rounded-xl p-5 text-center">
+                                <i class="fas fa-laptop-code text-3xl text-emerald-400 mb-2"></i>
+                                <h3 class="text-3xl font-extrabold text-white">25+</h3>
+                                <p class="text-xs text-slate-400 mt-1">Premium Courses</p>
+                            </div>
+                            <div class="stat-card bg-white/10 rounded-xl p-5 text-center">
+                                <i class="fas fa-briefcase text-3xl text-emerald-400 mb-2"></i>
+                                <h3 class="text-3xl font-extrabold text-white">8,500+</h3>
+                                <p class="text-xs text-slate-400 mt-1">Placed Students</p>
+                            </div>
+                            <div class="stat-card bg-white/10 rounded-xl p-5 text-center">
+                                <i class="fas fa-star text-3xl text-emerald-400 mb-2"></i>
+                                <h3 class="text-3xl font-extrabold text-white">4.9</h3>
+                                <p class="text-xs text-slate-400 mt-1">Average Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Mission Card -->
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-8 hover:shadow-md transition">
+                <div class="w-14 h-14 flex items-center justify-center bg-emerald-100 rounded-xl mb-5">
+                    <i class="fas fa-bullseye text-2xl text-emerald-600"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-slate-900 tracking-tight">Our Mission</h3>
+                <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                    To democratize high-income skill education by providing <strong class="text-slate-700">practical, industry-vetted curriculums</strong> that eliminate the gap between learning and earning. We exist to create a generation of skilled professionals who don't just survive but dominate the digital economy.
+                </p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <span>Industry-relevant skills training</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <span>Direct income generation pathways</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
+                        <span>Affordable premium education</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Vision Card -->
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-8 hover:shadow-md transition">
+                <div class="w-14 h-14 flex items-center justify-center bg-purple-100 rounded-xl mb-5">
+                    <i class="fas fa-eye text-2xl text-purple-600"></i>
+                </div>
+                <h3 class="text-lg font-extrabold text-slate-900 tracking-tight">Our Vision</h3>
+                <p class="text-slate-500 text-sm mt-3 leading-relaxed">
+                    To become the <strong class="text-slate-700">#1 skill acquisition ecosystem</strong> in India by 2028, where every student who joins our platform transforms into a high-earning professional with verified credentials that are recognized across global enterprises.
+                </p>
+                <ul class="mt-4 space-y-2">
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-purple-500 mt-0.5"></i>
+                        <span>1 Million+ skilled professionals by 2028</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-purple-500 mt-0.5"></i>
+                        <span>Global enterprise partnerships</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-xs text-slate-600">
+                        <i class="fas fa-check-circle text-purple-500 mt-0.5"></i>
+                        <span>Recognized certification standard</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="bg-slate-50 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">What We Stand For</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Our Core Values</h2>
+                <p class="text-slate-500 text-sm mt-2 max-w-lg mx-auto">These principles guide every decision we make and every course we create.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <!-- Value 1 -->
+                <div class="value-card bg-white rounded-xl border-2 border-transparent shadow-sm p-6 text-center">
+                    <div class="value-icon w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl mx-auto mb-4 text-slate-700">
+                        <i class="fas fa-bolt text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Execution First</h4>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">No theory without practice. Every lesson has real-world implementation.</p>
+                </div>
+                <!-- Value 2 -->
+                <div class="value-card bg-white rounded-xl border-2 border-transparent shadow-sm p-6 text-center">
+                    <div class="value-icon w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl mx-auto mb-4 text-slate-700">
+                        <i class="fas fa-shield-alt text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Radical Transparency</h4>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">No hidden fees. No fake promises. Just honest, results-driven education.</p>
+                </div>
+                <!-- Value 3 -->
+                <div class="value-card bg-white rounded-xl border-2 border-transparent shadow-sm p-6 text-center">
+                    <div class="value-icon w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl mx-auto mb-4 text-slate-700">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Community Driven</h4>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Learn together, grow together. Our network is your net worth.</p>
+                </div>
+                <!-- Value 4 -->
+                <div class="value-card bg-white rounded-xl border-2 border-transparent shadow-sm p-6 text-center">
+                    <div class="value-icon w-12 h-12 flex items-center justify-center bg-slate-100 rounded-xl mx-auto mb-4 text-slate-700">
+                        <i class="fas fa-rocket text-xl"></i>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900">Continuous Innovation</h4>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Curriculums updated monthly to match evolving industry demands.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="text-center mb-8">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">The Process</p>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">How Skills Syndicate Works</h2>
+            <p class="text-slate-500 text-sm mt-2 max-w-lg mx-auto">Our proven 4-step framework that transforms beginners into high-earning professionals.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Step 1 -->
+            <div class="text-center relative">
+                <div class="w-16 h-16 flex items-center justify-center bg-emerald-600 text-white rounded-2xl mx-auto mb-4 text-xl font-extrabold shadow-lg shadow-emerald-200">
+                    1
+                </div>
+                <h4 class="text-sm font-bold text-slate-900">Choose Blueprint</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Select from our curated, high-demand skill tracks designed by industry experts.</p>
+            </div>
+            <!-- Step 2 -->
+            <div class="text-center relative">
+                <div class="w-16 h-16 flex items-center justify-center bg-emerald-600 text-white rounded-2xl mx-auto mb-4 text-xl font-extrabold shadow-lg shadow-emerald-200">
+                    2
+                </div>
+                <h4 class="text-sm font-bold text-slate-900">Learn By Doing</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Build real projects from day one. Our curriculum is 80% practical, 20% theory.</p>
+            </div>
+            <!-- Step 3 -->
+            <div class="text-center relative">
+                <div class="w-16 h-16 flex items-center justify-center bg-emerald-600 text-white rounded-2xl mx-auto mb-4 text-xl font-extrabold shadow-lg shadow-emerald-200">
+                    3
+                </div>
+                <h4 class="text-sm font-bold text-slate-900">Get Verified</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Earn industry-recognized credentials that prove your expertise to employers.</p>
+            </div>
+            <!-- Step 4 -->
+            <div class="text-center relative">
+                <div class="w-16 h-16 flex items-center justify-center bg-emerald-600 text-white rounded-2xl mx-auto mb-4 text-xl font-extrabold shadow-lg shadow-emerald-200">
+                    4
+                </div>
+                <h4 class="text-sm font-bold text-slate-900">Start Earning</h4>
+                <p class="text-xs text-slate-500 mt-2 leading-relaxed">Access our job board, freelance opportunities, and affiliate programs to monetize.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="bg-slate-50 py-12">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-8">
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">The Architects</p>
+                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">Meet Our Core Team</h2>
+                <p class="text-slate-500 text-sm mt-2 max-w-lg mx-auto">Passionate educators and industry veterans committed to your success.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="h-48 overflow-hidden bg-gradient-to-br from-emerald-400 to-emerald-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-6xl text-white/60"></i>
+                    </div>
+                    <div class="p-5 text-center">
+                        <h4 class="text-sm font-bold text-slate-900">Arjun Mehta</h4>
+                        <p class="text-[11px] text-emerald-600 font-semibold">Founder & CEO</p>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Ex-Google, 10+ years in edtech. Built 3 successful startups.</p>
+                        <div class="flex justify-center space-x-3 mt-3 text-slate-400 text-sm">
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="team-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="h-48 overflow-hidden bg-gradient-to-br from-blue-400 to-blue-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-6xl text-white/60"></i>
+                    </div>
+                    <div class="p-5 text-center">
+                        <h4 class="text-sm font-bold text-slate-900">Priya Sharma</h4>
+                        <p class="text-[11px] text-emerald-600 font-semibold">Head of Curriculum</p>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Full-stack developer. Built courses used by 50K+ students globally.</p>
+                        <div class="flex justify-center space-x-3 mt-3 text-slate-400 text-sm">
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="team-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="h-48 overflow-hidden bg-gradient-to-br from-purple-400 to-purple-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-6xl text-white/60"></i>
+                    </div>
+                    <div class="p-5 text-center">
+                        <h4 class="text-sm font-bold text-slate-900">Rahul Verma</h4>
+                        <p class="text-[11px] text-emerald-600 font-semibold">Growth Lead</p>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Digital marketing expert. Scaled 3 businesses to ₹10Cr+ revenue.</p>
+                        <div class="flex justify-center space-x-3 mt-3 text-slate-400 text-sm">
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="team-card bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                    <div class="h-48 overflow-hidden bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center">
+                        <i class="fas fa-user-tie text-6xl text-white/60"></i>
+                    </div>
+                    <div class="p-5 text-center">
+                        <h4 class="text-sm font-bold text-slate-900">Sneha Patel</h4>
+                        <p class="text-[11px] text-emerald-600 font-semibold">Student Success</p>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Career coach. Helped 2000+ students land their dream jobs.</p>
+                        <div class="flex justify-center space-x-3 mt-3 text-slate-400 text-sm">
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" class="hover:text-emerald-600 transition"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+        <div class="text-center mb-8">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Success Stories</p>
+            <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">What Our Students Say</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Testimonial 1 -->
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="flex text-yellow-400 mb-3 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed italic">"Skills Syndicate changed my life. I was earning ₹25K/month, after completing the React course I landed a ₹1.2L/month remote job. Best investment ever!"</p>
+                <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                    <i class="fas fa-user-circle text-2xl text-emerald-600"></i>
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900">Vikram Singh</h5>
+                        <p class="text-[10px] text-slate-400">React Developer at TCS</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 2 -->
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="flex text-yellow-400 mb-3 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed italic">"The Digital Marketing course is pure gold. I implemented the strategies and grew my freelance income from ₹30K to ₹2.5L/month in just 6 months."</p>
+                <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                    <i class="fas fa-user-circle text-2xl text-emerald-600"></i>
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900">Anjali Desai</h5>
+                        <p class="text-[10px] text-slate-400">Freelance Marketer</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Testimonial 3 -->
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <div class="flex text-yellow-400 mb-3 text-sm">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed italic">"As a college student, I was confused about career path. The UI/UX course gave me clarity and skills. Now I freelance for US clients and earn in dollars!"</p>
+                <div class="flex items-center gap-3 mt-4 pt-3 border-t border-slate-50">
+                    <i class="fas fa-user-circle text-2xl text-emerald-600"></i>
+                    <div>
+                        <h5 class="text-xs font-bold text-slate-900">Rohit Kumar</h5>
+                        <p class="text-[10px] text-slate-400">UI/UX Designer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-emerald-600 to-emerald-800 py-12">
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Ready To Transform Your Career?</h2>
+            <p class="text-emerald-100 text-sm mt-3 max-w-md mx-auto">
+                Join 15,000+ students who are already building high-income skills with Skills Syndicate.
+            </p>
+            <div class="flex justify-center gap-3 mt-6">
+                <a href="index.html#courses" class="bg-white text-emerald-700 font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg hover:bg-emerald-50 transition">
+                    Browse Courses
+                </a>
+                <a href="index.html#contact" class="bg-transparent border-2 border-white text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-lg hover:bg-white/10 transition">
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-500 py-8 text-[11px]">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-2">Skills Syndicate</h4>
+                    <p class="leading-relaxed text-xs">Premium skill acquisition platform for the modern digital professional.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Quick Links</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="index.html" class="hover:text-emerald-400 transition">Home</a></li>
+                        <li><a href="index.html#courses" class="hover:text-emerald-400 transition">Courses</a></li>
+                        <li><a href="about.html" class="hover:text-emerald-400 transition">About</a></li>
+                        <li><a href="blog.html" class="hover:text-emerald-400 transition">Blogs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Programs</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="#" class="hover:text-emerald-400 transition">Affiliate Program</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Freelancing Hub</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Skill Development</a></li>
+                        <li><a href="#" class="hover:text-emerald-400 transition">Student Programs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Connect</h5>
+                    <div class="flex space-x-3 text-base">
+                        <a href="https://instagram.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-emerald-400 transition"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-emerald-400 transition">Privacy Policy</a>
+                    <a href="#" class="hover:text-emerald-400 transition">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
