@@ -251,10 +251,8 @@
                             // Swap View blocks
                             document.getElementById('affiliateLockedBox').classList.add('hidden');
                             document.getElementById('affiliateUnlockedBox').classList.remove('hidden');
+document.getElementById('myAffiliateLinkDisplay').value = `https://infoskillssyndicate.github.io/Skills-syndicate-/payment.html?course=${courseTargetId}&ref=${generatedPromoCode}`;
                             
-                            document.getElementById('myPromoCodeDisplay').innerText = generatedPromoCode;
-                            document.getElementById('myAffiliateLinkDisplay').value = `${window.location.origin}/payment.html?course=${courseTargetId}&ref=${generatedPromoCode}`;
-                        });
 
                     } else {
                         // 🔒 Keep locked state elements active if status is "pending" or any other fallback
