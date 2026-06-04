@@ -348,7 +348,7 @@
                 if (course) {
                     el.courseName.innerText = course.title || course.courseName || course.name || 'Course';
                     el.courseBadge.innerText = course.category || course.courseCategory || course.level || 'Course';
-                    const learnLink = course.learningLink || course.link || course.url || `course.html?id=${courseId}`;
+                    const learnLink = course.learningLink || course.link || course.url || `course-access.html?id=${courseId}`;
                     el.startBtn.href = learnLink;
                 } else {
                     el.courseName.innerText = 'Course not found in database';
