@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Syndicate | Premium Skill Acquisition</title>
+    <meta name="description" content="Premium Skill Courses, High-Income Blueprints & Freelancing Opportunities. Master modern execution frameworks at Skills Syndicate.">
+    <meta name="keywords" content="skills syndicate, freelancing, elite courses, affiliate marketing, side hustle, high income skills">
+    <meta property="og:title" content="Skills Syndicate | Master High-Income Skills">
+    <meta property="og:description" content="Skip the academic fluff. Master highly-vetted, real-world execution frameworks curated for modern digital excellence.">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap');
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: #fcfcfc; 
+            overflow-x: hidden;
+        }
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(4px);
+            z-index: 40; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .overlay.active { opacity: 1; visibility: visible; }
+        .slide-menu {
+            position: fixed; top: 0; right: -100%; width: 320px; height: 100vh;
+            background: #ffffff; z-index: 50; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1); overflow-y: auto;
+        }
+        .slide-menu.active { right: 0; }
+        .menu-link { position: relative; transition: all 0.3s ease; }
+        .menu-link:hover { padding-left: 8px; }
+        .menu-link::before {
+            content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px;
+            background: #059669; transition: width 0.3s ease;
+        }
+        .menu-link:hover::before { width: 100%; }
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%; animation: loading-shimmer 1.5s infinite;
+        }
+        @keyframes loading-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    </style>
+</head>
+<body class="text-slate-900">
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- Side Out Drawer Navigation Menu -->
+    <div class="slide-menu" id="slideMenu">
+        <div class="flex justify-between items-center p-6 border-b border-slate-100">
+            <h3 class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </h3>
+            <div class="flex items-center gap-2">
+                <a id="mobileProfileBtn" href="login.html" class="w-8 h-8 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-full hover:bg-emerald-200 transition" title="Profile">
+                    <i class="far fa-user text-sm"></i>
+                </a>
+                <button onclick="toggleMenu()" class="w-8 h-8 flex items-center justify-center bg-slate-100 rounded-full hover:bg-slate-200 transition">
+                    <i class="fas fa-times text-slate-600"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="px-6 py-4 space-y-1">
+            <a href="index.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-emerald-600 font-semibold transition block">
+                <i class="fas fa-home w-5 text-emerald-600"></i>
+                <span>Home</span>
+            </a>
+            <a href="about.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-slate-700 font-semibold hover:text-emerald-600 transition block">
+                <i class="fas fa-info-circle w-5 text-emerald-600"></i>
+                <span>About</span>
+            </a>
+            <a href="course.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-slate-700 font-semibold hover:text-emerald-600 transition block">
+                <i class="fas fa-graduation-cap w-5 text-emerald-600"></i>
+                <span>Courses</span>
+            </a>
+            <a href="blog.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-slate-700 font-semibold hover:text-emerald-600 transition block">
+                <i class="fas fa-blog w-5 text-emerald-600"></i>
+                <span>Blogs</span>
+            </a>
+            <a href="affiliate.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-slate-700 font-semibold hover:text-emerald-600 transition block">
+                <i class="fas fa-hand-holding-usd w-5 text-emerald-600"></i>
+                <span>Affiliate</span>
+            </a>
+            <a href="contact.html" class="menu-link flex items-center space-x-3 px-4 py-2.5 text-slate-700 font-semibold hover:text-emerald-600 transition block">
+                <i class="fas fa-envelope w-5 text-emerald-600"></i>
+                <span>Contact</span>
+            </a>
+        </div>
+        
+        <div class="border-t border-slate-100 mx-6"></div>
+        
+        <div class="px-6 py-4 space-y-2">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-4">Get In Touch</p>
+            <a href="mailto:support@skillssyndicate.com" class="contact-item flex items-center space-x-3 px-4 py-2 bg-slate-50 rounded-lg group">
+                <div class="w-8 h-8 flex items-center justify-center bg-red-100 rounded-lg"><i class="fas fa-envelope text-red-600 text-xs"></i></div>
+                <div><p class="text-[9px] text-slate-500">Email Us</p><p class="text-[11px] font-semibold text-slate-700 group-hover:text-emerald-600 transition">support@skillssyndicate.com</p></div>
+            </a>
+            <a href="https://wa.me/918279854743" target="_blank" class="contact-item flex items-center space-x-3 px-4 py-2 bg-slate-50 rounded-lg group">
+                <div class="w-8 h-8 flex items-center justify-center bg-green-100 rounded-lg"><i class="fab fa-whatsapp text-green-600 text-sm"></i></div>
+                <div><p class="text-[9px] text-slate-500">WhatsApp</p><p class="text-[11px] font-semibold text-slate-700 group-hover:text-emerald-600 transition">+91 82798 54743</p></div>
+            </a>
+        </div>
+        
+        <div class="border-t border-slate-100 mx-6"></div>
+        
+        <div class="px-6 py-4">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-4 mb-2">Follow Us</p>
+            <div class="flex space-x-3 px-4">
+                <a href="https://instagram.com/skillssyndicate" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 text-white rounded-xl shadow"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com/@skillsyndicate" target="_blank" class="w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-xl shadow"><i class="fab fa-youtube"></i></a>
+                <a href="https://t.me/skillsyndicate" target="_blank" class="w-10 h-10 flex items-center justify-center bg-sky-600 text-white rounded-xl shadow"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation Section -->
+    <header class="bg-white/90 backdrop-blur-md border-b border-slate-100 sticky top-0 z-30 py-2">
+        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="text-lg font-black tracking-tighter text-slate-900">
+                SKILLS<span class="text-emerald-600">.</span>SYNDICATE
+            </a>
+            <nav class="hidden md:flex space-x-5 text-xs font-bold uppercase tracking-wider text-slate-600">
+                <a href="index.html" class="text-emerald-600">Home</a>
+                <a href="course.html" class="hover:text-emerald-600 transition">Courses</a>
+                <a href="about.html" class="hover:text-emerald-600 transition">About</a>
+                <a href="blog.html" class="hover:text-emerald-600 transition">Blogs</a>
+                <a href="affiliate.html" class="hover:text-emerald-600 transition">Affiliate</a>
+                <a href="contact.html" class="hover:text-emerald-600 transition">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a id="desktopProfileBtn" href="login.html" class="w-8 h-8 flex items-center justify-center bg-slate-100 text-slate-800 rounded-full hover:bg-slate-200 transition" title="Profile">
+                    <i class="far fa-user text-sm"></i>
+                </a>
+                <button onclick="toggleMenu()" class="text-slate-900 hover:text-emerald-600 transition cursor-pointer">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Platform Display Section -->
+    <section class="max-w-4xl mx-auto px-4 pt-10 pb-6 text-center">
+        <span class="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Elite Network Active
+        </span>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mt-2 tracking-tight leading-tight">
+            We Don't Teach Tools. We Build <span class="text-emerald-600">High-Income Syndicates.</span>
+        </h1>
+        <p class="text-xs md:text-sm text-slate-500 mt-2 max-w-lg mx-auto leading-normal">
+            Skip the academic fluff. Master highly-vetted, real-world execution frameworks curated for modern digital excellence.
+        </p>
+        
+        <div class="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] font-bold uppercase text-slate-600 tracking-wider">
+            <span><i class="fas fa-check-circle text-emerald-500"></i> Lifetime Access</span>
+            <span><i class="fas fa-check-circle text-emerald-500"></i> Premium Credentials</span>
+            <span><i class="fas fa-check-circle text-emerald-500"></i> Up to 30% Affiliate Comm.</span>
+        </div>
+
+        <div class="mt-6 flex justify-center space-x-2 text-[11px] font-bold uppercase tracking-wider">
+            <a href="course.html" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg font-bold shadow-md transition">Browse Blueprints</a>
+        </div>
+    </section>
+
+    <!-- Platform Operational Statistics Metrics Grid -->
+    <section class="max-w-5xl mx-auto px-4 py-4 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white border border-slate-100 rounded-xl p-4 shadow-sm text-center">
+            <div><h3 class="text-xl md:text-2xl font-black text-slate-900">500+</h3><p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mt-0.5">Active Members</p></div>
+            <div class="border-l border-slate-100"><h3 class="text-xl md:text-2xl font-black text-emerald-600">20+</h3><p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mt-0.5">High Income Blueprints</p></div>
+            <div class="border-l border-slate-100"><h3 class="text-xl md:text-2xl font-black text-slate-900">30%</h3><p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mt-0.5">Affiliate Payouts</p></div>
+            <div class="border-l border-slate-100"><h3 class="text-xl md:text-2xl font-black text-emerald-600">24/7</h3><p class="text-[10px] uppercase tracking-wider font-bold text-slate-400 mt-0.5">Syndicate Support</p></div>
+        </div>
+    </section>
+
+    <!-- Top 5 Dynamic Courses Display Section -->
+    <section id="courses" class="max-w-6xl mx-auto px-4 py-4">
+        <div class="flex justify-between items-end mb-4 pb-1.5 border-b border-slate-100">
+            <div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Active Curriculums</p>
+                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Available Blueprints (Top 5)</h2>
+            </div>
+            <a href="course.html" class="text-[11px] text-emerald-600 font-bold hover:underline">View All →</a>
+        </div>
+
+        <div id="courseContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Shimmer placeholders running actively on paint -->
+            <div class="bg-white border border-slate-100 rounded-lg p-4 space-y-3 shadow-sm skeleton-loader">
+                <div class="skeleton h-28 w-full rounded-md"></div>
+                <div class="skeleton h-4 w-3/4 rounded"></div>
+                <div class="skeleton h-3 w-full rounded"></div>
+                <div class="skeleton h-3 w-5/6 rounded"></div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-50">
+                    <div class="space-y-1"><div class="skeleton h-2 w-10 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
+                    <div class="skeleton h-7 w-16 rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white border border-slate-100 rounded-lg p-4 space-y-3 shadow-sm skeleton-loader">
+                <div class="skeleton h-28 w-full rounded-md"></div>
+                <div class="skeleton h-4 w-3/4 rounded"></div>
+                <div class="skeleton h-3 w-full rounded"></div>
+                <div class="skeleton h-3 w-5/6 rounded"></div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-50">
+                    <div class="space-y-1"><div class="skeleton h-2 w-10 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
+                    <div class="skeleton h-7 w-16 rounded"></div>
+                </div>
+            </div>
+            <div class="bg-white border border-slate-100 rounded-lg p-4 space-y-3 shadow-sm skeleton-loader">
+                <div class="skeleton h-28 w-full rounded-md"></div>
+                <div class="skeleton h-4 w-3/4 rounded"></div>
+                <div class="skeleton h-3 w-full rounded"></div>
+                <div class="skeleton h-3 w-5/6 rounded"></div>
+                <div class="flex justify-between items-center pt-2 border-t border-slate-50">
+                    <div class="space-y-1"><div class="skeleton h-2 w-10 rounded"></div><div class="skeleton h-4 w-16 rounded"></div></div>
+                    <div class="skeleton h-7 w-16 rounded"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Testimonials Grid Context -->
+    <section class="max-w-6xl mx-auto px-4 py-8 bg-slate-50 rounded-2xl my-6">
+        <div class="text-center mb-6">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Proof of Concept</p>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Real Results From Inside The Syndicate</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                <p class="text-xs text-slate-600 italic leading-relaxed">"The Web Dev blueprint zeroed out unnecessary theory. Within 3 weeks of execution, I deployed my freelance landing portal and safely cracked a regular remote retention retainer worth ₹35k/mo."</p>
+                <div class="flex items-center gap-2 mt-4 border-t border-slate-50 pt-2.5">
+                    <div class="w-7 h-7 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-xs">R</div>
+                    <div><h4 class="text-xs font-bold text-slate-900">Rahul Verma</h4><p class="text-[9px] font-medium text-slate-400">Freelance Developer</p></div>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                <p class="text-xs text-slate-600 italic leading-relaxed">"The affiliate system structure is incredible. I simply passed the tracking pipelines down across my networking channels and generated ₹12,400 in commissions directly inside my withdrawable dashboard wallet balance."</p>
+                <div class="flex items-center gap-2 mt-4 border-t border-slate-50 pt-2.5">
+                    <div class="w-7 h-7 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-xs">A</div>
+                    <div><h4 class="text-xs font-bold text-slate-900">Aman Chawla</h4><p class="text-[9px] font-medium text-slate-400">Network Affiliate</p></div>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col justify-between">
+                <p class="text-xs text-slate-600 italic leading-relaxed">"Elite operational layout. The modules are actionable and contain direct copy-paste templates that deliver instant utility out of the box instead of boring textbook slides."</p>
+                <div class="flex items-center gap-2 mt-4 border-t border-slate-50 pt-2.5">
+                    <div class="w-7 h-7 bg-emerald-600 text-white rounded-full flex items-center justify-center font-bold text-xs">P</div>
+                    <div><h4 class="text-xs font-bold text-slate-900">Priya Sharma</h4><p class="text-[9px] font-medium text-slate-400">UI/UX Consultant</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Value Architecture Philosophy -->
+    <section id="about" class="bg-slate-950 text-white py-8">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <span class="text-[9px] font-bold uppercase tracking-widest text-emerald-400 block mb-0.5">Our DNA</span>
+                    <h3 class="text-sm font-bold tracking-tight">The Syndicate Philosophy</h3>
+                    <p class="text-slate-400 text-[11px] mt-1 leading-normal">Skills Syndicate is a premium hub crafted exclusively for individuals who despise generic crash courses. We provide rigorous blueprints optimized for execution.</p>
+                </div>
+                <div class="border-t border-slate-800 pt-3 md:border-t-0 md:pt-0">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-emerald-400"><i class="fas fa-bolt mr-1"></i> Vetted Delivery</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5 leading-normal">Zero bloatware content. Every minute of instruction is designed to trigger compounding professional returns.</p>
+                </div>
+                <div class="border-t border-slate-800 pt-3 md:border-t-0 md:pt-0">
+                    <h4 class="text-[11px] font-bold uppercase tracking-wider text-emerald-400"><i class="fas fa-shield-alt mr-1"></i> Credential Network</h4>
+                    <p class="text-slate-400 text-[11px] mt-0.5 leading-normal">Completing a blueprint grants direct verification credentials recognized across digital-first enterprises.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Operational Mapping Location Section -->
+    <section id="contact" class="max-w-6xl mx-auto px-4 py-8">
+        <div class="text-center mb-6">
+            <p class="text-[10px] font-bold uppercase tracking-widest text-emerald-600">Get In Touch</p>
+            <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Contact The Syndicate</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div class="text-center p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+                <i class="fas fa-envelope text-2xl text-emerald-600 mb-2"></i>
+                <h4 class="text-xs font-bold text-slate-900">Email</h4>
+                <a href="mailto:support@skillssyndicate.com" class="text-[11px] text-slate-500 hover:text-emerald-600 transition">support@skillssyndicate.com</a>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+                <i class="fab fa-whatsapp text-2xl text-emerald-600 mb-2"></i>
+                <h4 class="text-xs font-bold text-slate-900">WhatsApp</h4>
+                <a href="https://wa.me/918279854743" target="_blank" class="text-[11px] text-slate-500 hover:text-emerald-600 transition">+91 82798 54743</a>
+            </div>
+            <div class="text-center p-4 bg-white rounded-lg border border-slate-100 shadow-sm">
+                <i class="fas fa-map-marker-alt text-2xl text-emerald-600 mb-2"></i>
+                <h4 class="text-xs font-bold text-slate-900">Operations</h4>
+                <p class="text-[11px] text-slate-500">Uttar Pradesh, India</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal Terms Footer Context -->
+    <footer class="bg-slate-950 text-slate-500 py-8 text-[11px] border-t border-slate-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-2">Skills Syndicate</h4>
+                    <p class="leading-relaxed text-xs">Premium skill acquisition platform for the modern digital professional.</p>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Quick Links</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="index.html" class="hover:text-emerald-400 transition">Home</a></li>
+                        <li><a href="course.html" class="hover:text-emerald-400 transition">Courses</a></li>
+                        <li><a href="about.html" class="hover:text-emerald-400 transition">About</a></li>
+                        <li><a href="blog.html" class="hover:text-emerald-400 transition">Blogs</a></li>
+                        <li><a href="contact.html" class="hover:text-emerald-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Programs</h5>
+                    <ul class="space-y-1 text-xs">
+                        <li><a href="affiliate.html" class="hover:text-emerald-400 transition">Affiliate Program</a></li>
+                        <li><a href="course.html" class="hover:text-emerald-400 transition">Freelancing Hub</a></li>
+                        <li><a href="course.html" class="hover:text-emerald-400 transition">Skill Development</a></li>
+                        <li><a href="login.html" class="hover:text-emerald-400 transition">Student Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-white font-semibold mb-2">Connect</h5>
+                    <div class="flex space-x-3 text-sm">
+                        <a href="https://instagram.com/skillssyndicate" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/@skillsyndicate" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-youtube"></i></a>
+                        <a href="https://t.me/skillsyndicate" target="_blank" class="hover:text-emerald-400 transition"><i class="fab fa-telegram-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
+                <p>&copy; 2026 Skills Syndicate. Engineered for performance.</p>
+                <div class="flex gap-4">
+                    <a href="privacy.html" class="hover:text-emerald-400 transition">Privacy Policy</a>
+                    <a href="terms.html" class="hover:text-emerald-400 transition">Terms & Conditions</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
+            authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
+            databaseURL: "https://skills-syndicate-7b4ea-default-rtdb.firebaseio.com",
+            projectId: "skills-syndicate-7b4ea",
+            storageBucket: "skills-syndicate-7b4ea.firebasestorage.app",
+            messagingSenderId: "439514375749",
+            appId: "1:439514375749:web:34eec9b50718926a0d652c",
+            measurementId: "G-DKXYCLX5NW"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // 🛑 AUTOMATED REVENUE TRACKING VECTOR ENGINE
+        (function trackReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+
+            const cookieExpiryDuration = 30 * 24 * 60 * 60 * 1000; 
+            const currentTimestamp = Date.now();
+            const savedTimestamp = localStorage.getItem('ss_referrer_time');
+
+            if (savedTimestamp && (currentTimestamp - savedTimestamp > cookieExpiryDuration)) {
+                localStorage.removeItem('ss_stealth_referrer');
+                localStorage.removeItem('ss_referrer_time');
+            }
+
+            if (refCode && refCode.trim() !== "") {
+                const cleanedRef = refCode.trim();
+                
+                localStorage.setItem('ss_stealth_referrer', cleanedRef);
+                localStorage.setItem('ss_referrer_time', currentTimestamp.toString());
+
+                if (!sessionStorage.getItem('tracked_vector_' + cleanedRef)) {
+                    database.ref(`affiliates/${cleanedRef}/clicks`).transaction(v => (v || 0) + 1);
+                    sessionStorage.setItem('tracked_vector_' + cleanedRef, '1');
+                }
+            }
+        })();
+
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+            .catch((error) => console.log('Session error:', error));
+
+        function toggleMenu() {
+            const menu = document.getElementById('slideMenu');
+            const overlay = document.getElementById('overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function updateProfileUI(isLoggedIn) {
+            const desktopBtn = document.getElementById('desktopProfileBtn');
+            const mobileBtn = document.getElementById('mobileProfileBtn');
+            const targetUrl = isLoggedIn ? 'dashboard.html' : 'login.html';
+            const iconClass = isLoggedIn ? 'fas fa-user text-emerald-600' : 'far fa-user';
+            
+            if(desktopBtn) desktopBtn.innerHTML = `<i class="${iconClass} text-sm"></i>`;
+            if(desktopBtn) desktopBtn.setAttribute('href', targetUrl);
+            if(mobileBtn) mobileBtn.innerHTML = `<i class="${iconClass} text-sm"></i>`;
+            if(mobileBtn) mobileBtn.setAttribute('href', targetUrl);
+        }
+
+        // Optimized Top-5 Database Extraction Engine
+        function loadTopCourses() {
+            const courseContainer = document.getElementById('courseContainer');
+            
+            // Speed Boost: `.once()` is applied instead of `.on()` to minimize active background sockets
+            database.ref('courses').orderByChild('createdAt').limitToLast(5).once('value').then((snapshot) => {
+                if (!snapshot.exists()) {
+                    courseContainer.innerHTML = `<div class="col-span-full text-center text-slate-400 py-8 text-xs font-medium">No blueprints available. Upload from Admin Panel!</div>`;
+                    return;
+                }
+
+                let coursesArray = [];
+                snapshot.forEach((childSnapshot) => {
+                    coursesArray.push({
+                        id: childSnapshot.key,
+                        ...childSnapshot.val()
+                    });
+                });
+
+                coursesArray.reverse();
+                
+                // Memory Accumulator optimization to prevent UI reflow lag
+                let htmlBuffer = '';
+
+                coursesArray.forEach(course => {
+                    const finalImage = course.imageUrl || course.image || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=cover'; 
+                    const originalPrice = course.originalPrice ? `₹${course.originalPrice}` : '₹4,999';
+                    const salePrice = course.price ? `₹${course.price}` : '₹499';
+                    const shortDescription = (course.description || '').substring(0, 120) + ((course.description || '').length > 120 ? '...' : '');
+                    
+                    htmlBuffer += `
+                        <div class="bg-white rounded-lg border border-slate-100 shadow-sm hover:shadow-md transition flex flex-col">
+                            <div class="relative h-28 flex items-center justify-center overflow-hidden bg-slate-950">
+                                <img src="${finalImage}" alt="${course.title}" class="w-full h-full object-cover opacity-80" onerror="this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=cover';">
+                                <span class="absolute bottom-2 left-2 bg-white/10 backdrop-blur-md text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">${course.category || 'Education'}</span>
+                            </div>
+                            <div class="p-4 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <h3 onclick="handleEnroll('${course.id}')" class="text-sm font-bold text-slate-900 leading-tight hover:text-emerald-600 transition duration-200 cursor-pointer">${course.title}</h3>
+                                    <p class="text-slate-500 text-[11px] mt-1 line-clamp-2">${shortDescription}</p>
+                                    <div class="flex items-center space-x-3 mt-2 text-[10px] font-semibold text-slate-400">
+                                        <span><i class="far fa-clock mr-1 text-emerald-500"></i> ${course.duration || '12 Hours'}</span>
+                                        <span><i class="fas fa-layer-group mr-1 text-emerald-500"></i> ${course.level || 'Beginner'}</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between border-t border-slate-50 pt-3 mt-3">
+                                    <div>
+                                        <span class="text-[10px] text-slate-400 line-through block leading-none">${originalPrice}</span>
+                                        <span class="text-base font-black text-slate-900">${salePrice}</span>
+                                    </div>
+                                    <button onclick="handleEnroll('${course.id}')" class="bg-slate-900 hover:bg-emerald-600 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1.5 rounded transition cursor-pointer">Enrol</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                // One single structural injection to ensure instantaneous display
+                courseContainer.innerHTML = htmlBuffer;
+            }).catch((error) => {
+                console.error("Data Fetch Error:", error);
+                courseContainer.innerHTML = `<div class="col-span-full text-center text-red-500 py-8 text-xs font-medium">Failed to fetch active blueprints instantly. Retrying...</div>`;
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateProfileUI(!!localStorage.getItem('ss_user_session'));
+            loadTopCourses();
+        });
+
+        function handleEnroll(courseId) {
+            window.location.href = 'course-single.html?course=' + courseId;
+        }
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                localStorage.setItem('ss_user_session', JSON.stringify({ uid: user.uid, email: user.email }));
+                updateProfileUI(true);
+            } else {
+                updateProfileUI(false);
+            }
+        });
+    </script>
+</body>
+</html>
