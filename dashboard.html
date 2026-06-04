@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Student Dashboard | Skills Syndicate</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         * { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -13,117 +14,211 @@
         @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .toast { position: fixed; bottom: 20px; right: 20px; z-index: 1000; animation: slideIn 0.3s ease; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .debug-panel { position: fixed; bottom: 10px; left: 10px; background: rgba(0,0,0,0.8); color: #0f0; font-size: 10px; padding: 5px 10px; border-radius: 5px; font-family: monospace; z-index: 9999; cursor: pointer; opacity: 0.5; }
-        .debug-panel:hover { opacity: 1; }
+        .stat-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); }
+        .copy-btn { transition: all 0.2s; }
+        .copy-btn:active { transform: scale(0.95); }
+        .blur-locked { filter: blur(8px); pointer-events: none; user-select: none; }
+        .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 8px; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
+    <!-- HEADER -->
     <header class="bg-white border-b border-slate-200 py-4 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 flex justify-between items-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
             <span class="text-base font-black tracking-tighter">SKILLS<span class="text-emerald-600">.</span>SYNDICATE</span>
             <div class="flex items-center gap-4">
                 <div class="text-right hidden sm:block">
                     <p id="navUserEmail" class="text-xs font-bold text-slate-700">Loading...</p>
-                    <p class="text-[9px] text-emerald-600 font-bold uppercase">Student Portal</p>
+                    <p id="navAffiliateBadge" class="text-[9px] text-emerald-600 font-bold uppercase">AFFILIATE PARTNER</p>
                 </div>
-                <button onclick="logoutEngine()" class="text-slate-400 hover:text-red-500 transition px-3 py-1 rounded-lg">
+                <button onclick="logoutEngine()" class="text-slate-400 hover:text-red-500 transition px-3 py-1 rounded-lg cursor-pointer">
                     <i class="fas fa-sign-out-alt"></i>
                 </button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+    <!-- MAIN CONTENT -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-grow w-full">
         
         <!-- SKELETON LOADER -->
         <div id="skeletonLoader" class="space-y-6">
             <div class="bg-slate-800 rounded-2xl h-32 skeleton"></div>
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2"><div class="bg-white rounded-2xl h-64 skeleton"></div></div>
-                <div class="bg-white rounded-2xl h-80 skeleton"></div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="bg-white rounded-2xl h-48 skeleton"></div>
+                    <div class="bg-white rounded-2xl h-64 skeleton"></div>
+                </div>
+                <div><div class="bg-white rounded-2xl h-96 skeleton"></div></div>
             </div>
         </div>
 
-        <!-- MAIN DASHBOARD -->
+        <!-- DASHBOARD CONTENT -->
         <div id="dashboardContent" class="hidden space-y-6">
             
-            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 rounded-2xl shadow-lg">
-                <span class="bg-emerald-500 text-[8px] font-black px-2 py-0.5 rounded">ACTIVE</span>
-                <h1 class="text-2xl font-black mt-2">Welcome, <span id="welcomeName">Student</span>!</h1>
-                <p class="text-slate-400 text-sm mt-1">Manage your courses and affiliate earnings from one place.</p>
+            <!-- SECTION 1: WELCOME BANNER -->
+            <div id="welcomeBanner" class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-6 rounded-2xl shadow-lg">
+                <span id="affiliateStatusBadge" class="bg-emerald-500 text-[8px] font-black px-2 py-0.5 rounded">AFFILIATE ACTIVE</span>
+                <h1 class="text-2xl font-black mt-2">Hi <span id="welcomeName">Student</span> 👋</h1>
+                <div class="flex gap-4 mt-2 text-sm text-slate-300">
+                    <span><i class="fas fa-book-open mr-1"></i> <span id="purchasedCount">0</span> Courses</span>
+                    <span><i class="fas fa-circle-check mr-1"></i> Affiliate: <span id="affiliateStatusText">Active</span></span>
+                </div>
+            </div>
+
+            <!-- SECTION 9: ANNOUNCEMENTS -->
+            <div id="announcementsBar" class="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+                <div class="flex items-center gap-2">
+                    <i class="fas fa-bullhorn text-amber-600"></i>
+                    <marquee id="announcementsMarquee" class="text-sm text-amber-800 font-medium" behavior="scroll" direction="left">
+                        Loading announcements...
+                    </marquee>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 
-                <div class="lg:col-span-2 space-y-4">
-                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider">
-                        <i class="fas fa-graduation-cap text-emerald-600 mr-1"></i> Your Enrollment
-                    </h3>
+                <!-- LEFT COLUMN -->
+                <div class="lg:col-span-2 space-y-6">
                     
+                    <!-- SECTION 2: MY LEARNING VAULT -->
                     <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                        <div class="flex flex-col md:flex-row gap-5 items-start md:items-center justify-between">
-                            <div class="space-y-2 flex-1">
-                                <span id="courseBadge" class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">--</span>
-                                <h2 id="courseName" class="text-lg font-bold text-slate-900">--</h2>
-                                <div class="flex flex-wrap gap-2">
-                                    <span id="pendingBadge" class="hidden bg-amber-50 text-amber-600 text-[10px] font-bold px-2 py-1 rounded">
-                                        <i class="fas fa-clock"></i> Pending Verification
-                                    </span>
-                                    <span id="approvedBadge" class="hidden bg-emerald-50 text-emerald-600 text-[10px] font-bold px-2 py-1 rounded">
-                                        <i class="fas fa-check-circle"></i> Access Granted
-                                    </span>
-                                    <span id="expiredBadge" class="hidden bg-red-50 text-red-600 text-[10px] font-bold px-2 py-1 rounded">
-                                        <i class="fas fa-ban"></i> Access Expired
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="w-full md:w-auto">
-                                <div id="lockedMsg" class="text-slate-400 text-sm hidden">
-                                    <i class="fas fa-lock"></i> Awaiting payment confirmation
-                                </div>
-                                <a href="#" id="startBtn" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3 rounded-xl transition block text-center">
-                                    <i class="fas fa-play"></i> Start Learning
-                                </a>
-                            </div>
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-4">
+                            <i class="fas fa-graduation-cap text-emerald-600 mr-1"></i> My Learning Vault
+                        </h3>
+                        <div id="coursesContainer" class="space-y-4">
+                            <div class="text-center py-4 text-slate-400 text-sm">Loading courses...</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 3: LEARNING PROGRESS -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-4">
+                            <i class="fas fa-chart-bar text-emerald-600 mr-1"></i> Learning Progress
+                        </h3>
+                        <div id="progressContainer" class="space-y-4">
+                            <div class="text-center py-4 text-slate-400 text-sm">Complete courses to see progress</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 4: CERTIFICATES -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-4">
+                            <i class="fas fa-certificate text-emerald-600 mr-1"></i> My Certificates
+                        </h3>
+                        <div id="certificatesContainer" class="space-y-3">
+                            <div class="text-center py-4 text-slate-400 text-sm">Complete courses to unlock certificates</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 7: REFERRAL HISTORY -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-4">
+                            <i class="fas fa-history text-emerald-600 mr-1"></i> Referral Activity
+                        </h3>
+                        <div id="referralHistory" class="space-y-2 max-h-64 overflow-y-auto scrollbar-thin">
+                            <div class="text-center py-4 text-slate-400 text-sm">No referrals tracked yet</div>
                         </div>
                     </div>
                 </div>
 
-                <div class="space-y-4">
-                    <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider">
-                        <i class="fas fa-link text-emerald-600 mr-1"></i> Affiliate Program
-                    </h3>
+                <!-- RIGHT COLUMN -->
+                <div class="space-y-6">
                     
-                    <div id="affiliateLocked" class="bg-white border border-slate-200 rounded-2xl p-6 text-center">
-                        <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
-                            <i class="fas fa-lock text-slate-400"></i>
+                    <!-- SECTION 5: AFFILIATE EARNINGS (Blur if locked) -->
+                    <div id="affiliateEarningsCard" class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 text-white shadow-lg relative">
+                        <div id="affiliateLockOverlay" class="hidden absolute inset-0 bg-slate-900/80 rounded-2xl flex flex-col items-center justify-center z-10 p-4 text-center">
+                            <i class="fas fa-lock text-4xl text-amber-400 mb-3"></i>
+                            <p class="font-bold text-white text-sm">Affiliate Program Locked</p>
+                            <p class="text-slate-300 text-xs mt-1">Purchase any course to unlock your referral code and earn commissions.</p>
+                            <button onclick="window.location.href='index.html'" class="mt-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition cursor-pointer">
+                                <i class="fas fa-shopping-cart mr-1"></i> Browse Courses
+                            </button>
                         </div>
-                        <h4 class="font-bold mt-3">Affiliate Access Locked</h4>
-                        <p class="text-xs text-slate-500 mt-1">Get your enrollment approved to unlock 5% discount code</p>
+                        <div id="affiliateContent" class="">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="bg-emerald-500 text-[8px] font-black px-2 py-0.5 rounded">LIVE</span>
+                                <i class="fas fa-chart-line text-emerald-400 text-sm"></i>
+                            </div>
+                            <h3 class="font-bold text-lg">💰 Affiliate Earnings</h3>
+                            <div class="grid grid-cols-2 gap-3 mt-4">
+                                <div class="bg-white/10 rounded-xl p-3 text-center"><p class="text-2xl font-bold" id="statClicks">0</p><p class="text-[9px] text-slate-300 uppercase">Clicks</p></div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center"><p class="text-2xl font-bold" id="statSignups">0</p><p class="text-[9px] text-slate-300 uppercase">Signups</p></div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center"><p class="text-2xl font-bold" id="statSales">0</p><p class="text-[9px] text-slate-300 uppercase">Sales</p></div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center"><p class="text-2xl font-bold" id="statEarnings">0</p><p class="text-[9px] text-slate-300 uppercase">Earnings</p></div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div id="affiliateUnlocked" class="hidden bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 text-white">
-                        <div class="flex justify-between items-center mb-3">
-                            <span class="bg-emerald-500 text-[8px] font-black px-2 py-0.5 rounded">ACTIVE</span>
-                            <i class="fas fa-chart-line text-emerald-400"></i>
-                        </div>
-                        <h4 class="font-bold">💰 Share & Earn 5% Commission</h4>
-                        <p class="text-xs text-slate-300 mt-1">Your friends get 5% off, you earn commission</p>
-                        <div class="mt-4 space-y-3">
-                            <div>
-                                <label class="text-[10px] text-slate-400 uppercase">Your Code</label>
-                                <p id="promoCode" class="font-mono font-bold text-emerald-400 text-lg">----</p>
-                            </div>
-                            <div>
-                                <label class="text-[10px] text-slate-400 uppercase">Referral Link</label>
-                                <div class="flex gap-2 mt-1">
-                                    <input type="text" id="referralLink" readonly class="flex-1 text-xs bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-300">
-                                    <button onclick="copyLink(this)" class="bg-slate-700 hover:bg-slate-600 px-3 rounded-lg transition">
-                                        <i class="fas fa-copy"></i>
+                    <!-- SECTION 6: REFERRAL LINK -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">
+                            <i class="fas fa-share-alt text-emerald-600 mr-1"></i> Share & Earn
+                        </h3>
+                        <div id="referralSection">
+                            <div class="space-y-3">
+                                <div>
+                                    <label class="text-[10px] text-slate-500 font-bold">Your Promo Code</label>
+                                    <p id="promoCode" class="font-mono font-bold text-emerald-600 text-xl">----</p>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-500 font-bold">Referral Link</label>
+                                    <div class="flex gap-2 mt-1">
+                                        <input type="text" id="referralLink" readonly class="flex-1 text-xs bg-slate-50 border border-slate-200 rounded-lg p-2 text-slate-600 font-mono focus:outline-none">
+                                        <button onclick="copyLink()" class="copy-btn bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg transition cursor-pointer">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 pt-2">
+                                    <button onclick="shareWhatsApp()" class="w-full bg-[#25D366] text-white text-xs font-bold py-2 rounded-lg flex items-center justify-center gap-2 cursor-pointer hover:opacity-90 transition">
+                                        <i class="fab fa-whatsapp"></i> WhatsApp
+                                    </button>
+                                    <button onclick="shareTelegram()" class="w-full bg-[#0088cc] text-white text-xs font-bold py-2 rounded-lg flex items-center justify-center gap-2 cursor-pointer hover:opacity-90 transition">
+                                        <i class="fab fa-telegram"></i> Telegram
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- EARNINGS CHART -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <canvas id="earningsChart" height="150"></canvas>
+                        <p class="text-center text-xs text-slate-500 mt-2" id="monthlyEarning">Total Earnings: ₹0</p>
+                    </div>
+
+                    <!-- SECTION 8: LEADERBOARD -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">
+                            <i class="fas fa-trophy text-emerald-600 mr-1"></i> Top Affiliates
+                        </h3>
+                        <div id="leaderboardList" class="space-y-2">
+                            <div class="text-center py-4 text-slate-400 text-sm">Loading...</div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 10: SUPPORT -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-wider mb-3">
+                            <i class="fas fa-headset text-emerald-600 mr-1"></i> Support
+                        </h3>
+                        <div class="space-y-2">
+                            <a href="https://wa.me/919876543210" target="_blank" class="flex items-center gap-3 p-3 bg-[#25D366]/10 rounded-xl hover:bg-[#25D366]/20 transition cursor-pointer">
+                                <i class="fab fa-whatsapp text-[#25D366] text-xl"></i>
+                                <span class="text-xs font-bold text-slate-700">WhatsApp Support</span>
+                            </a>
+                            <a href="https://t.me/skillssyndicate" target="_blank" class="flex items-center gap-3 p-3 bg-[#0088cc]/10 rounded-xl hover:bg-[#0088cc]/20 transition cursor-pointer">
+                                <i class="fab fa-telegram text-[#0088cc] text-xl"></i>
+                                <span class="text-xs font-bold text-slate-700">Telegram Community</span>
+                            </a>
+                            <a href="mailto:support@skillssyndicate.com" class="flex items-center gap-3 p-3 bg-slate-100 rounded-xl hover:bg-slate-200 transition cursor-pointer">
+                                <i class="fas fa-envelope text-slate-600 text-xl"></i>
+                                <span class="text-xs font-bold text-slate-700">Email Support</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -131,22 +226,21 @@
         </div>
     </main>
 
-    <footer class="bg-white border-t border-slate-200 py-4 text-center text-[10px] text-slate-400">
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-[10px] text-slate-400 mt-auto">
         © 2026 Skills Syndicate. All rights reserved.
     </footer>
 
-    <div id="toastMsg" class="toast hidden bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg text-sm"></div>
-    
-    <!-- Debug Panel - Hidden by default, click to show -->
-    <div id="debugPanel" class="debug-panel hidden" onclick="copyDebugInfo()">
-        <i class="fas fa-bug"></i> Debug Info
-    </div>
+    <!-- TOAST -->
+    <div id="toastMsg" class="toast hidden text-white px-4 py-2 rounded-lg shadow-lg text-sm"></div>
 
+    <!-- FIREBASE SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
     <script>
+        // ============ FIREBASE CONFIG ============
         const firebaseConfig = {
             apiKey: "AIzaSyARrLCwANc0XQMr64_c_GwfgQe_v5s0Uls",
             authDomain: "skills-syndicate-7b4ea.firebaseapp.com",
@@ -158,342 +252,584 @@
         };
 
         if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        
         const auth = firebase.auth();
         const db = firebase.database();
 
-        let debugData = {};
+        // ============ GLOBAL STATE ============
+        let currentUserEmail = null;
+        let currentUserUID = null;
+        let currentPromoCode = "";
+        let hasUserPurchased = false;
+        let earningsChart = null;
+        let activeListeners = [];
 
+        // ============ DOM ELEMENTS ============
         const el = {
             skeleton: document.getElementById('skeletonLoader'),
             dashboard: document.getElementById('dashboardContent'),
             navEmail: document.getElementById('navUserEmail'),
+            navAffiliateBadge: document.getElementById('navAffiliateBadge'),
             welcomeName: document.getElementById('welcomeName'),
-            courseBadge: document.getElementById('courseBadge'),
-            courseName: document.getElementById('courseName'),
-            pendingBadge: document.getElementById('pendingBadge'),
-            approvedBadge: document.getElementById('approvedBadge'),
-            expiredBadge: document.getElementById('expiredBadge'),
-            lockedMsg: document.getElementById('lockedMsg'),
-            startBtn: document.getElementById('startBtn'),
-            affiliateLocked: document.getElementById('affiliateLocked'),
-            affiliateUnlocked: document.getElementById('affiliateUnlocked'),
+            purchasedCount: document.getElementById('purchasedCount'),
+            affiliateStatusText: document.getElementById('affiliateStatusText'),
+            affiliateStatusBadge: document.getElementById('affiliateStatusBadge'),
+            coursesContainer: document.getElementById('coursesContainer'),
+            progressContainer: document.getElementById('progressContainer'),
+            certificatesContainer: document.getElementById('certificatesContainer'),
             promoCode: document.getElementById('promoCode'),
             referralLink: document.getElementById('referralLink'),
-            debugPanel: document.getElementById('debugPanel')
+            statClicks: document.getElementById('statClicks'),
+            statSignups: document.getElementById('statSignups'),
+            statSales: document.getElementById('statSales'),
+            statEarnings: document.getElementById('statEarnings'),
+            monthlyEarning: document.getElementById('monthlyEarning'),
+            leaderboardList: document.getElementById('leaderboardList'),
+            referralHistory: document.getElementById('referralHistory'),
+            affiliateLockOverlay: document.getElementById('affiliateLockOverlay'),
+            affiliateContent: document.getElementById('affiliateContent'),
+            announcementsMarquee: document.getElementById('announcementsMarquee')
         };
 
+        // ============ UTILITY FUNCTIONS ============
         function showToast(msg, isError = false) {
             const toast = document.getElementById('toastMsg');
+            if (!toast) return;
             toast.textContent = msg;
-            toast.classList.remove('hidden', 'bg-slate-800', 'bg-red-600');
-            toast.classList.add(isError ? 'bg-red-600' : 'bg-slate-800');
+            toast.className = `toast text-white px-4 py-2 rounded-lg shadow-lg text-sm ${isError ? 'bg-red-600' : 'bg-slate-800'}`;
+            toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 3000);
         }
 
-        // Clipboard with fallback
-        async function copyToClipboard(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                try {
-                    await navigator.clipboard.writeText(text);
-                    return true;
-                } catch (err) { console.warn(err); }
-            }
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            const success = document.execCommand('copy');
-            document.body.removeChild(textArea);
-            return success;
-        }
-
-        function copyLink(btn) {
-            if (!el.referralLink.value) {
-                showToast('Link not ready yet', true);
-                return;
-            }
-            copyToClipboard(el.referralLink.value);
-            const original = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check"></i>';
-            setTimeout(() => btn.innerHTML = original, 1500);
-            showToast('✅ Link copied! Share to earn commissions');
-        }
-
-        // Safe session parsing
         function getSessionEmail() {
             const session = localStorage.getItem('ss_user_session');
             if (!session) return null;
-            try {
-                const parsed = JSON.parse(session);
-                return parsed.email || null;
-            } catch (e) {
-                console.error('Session parse error:', e);
-                localStorage.removeItem('ss_user_session');
-                return null;
-            }
+            try { return JSON.parse(session).email || null; } 
+            catch (e) { return null; }
         }
 
-        auth.onAuthStateChanged(async (user) => {
-            let email = user?.email || getSessionEmail();
-            
-            if (!email) {
-                showToast('Session expired. Please login again.', true);
-                setTimeout(() => window.location.href = 'index.html', 1500);
-                return;
-            }
+        function getSessionUID() {
+            const session = localStorage.getItem('ss_user_session');
+            if (!session) return null;
+            try { return JSON.parse(session).uid || null; } 
+            catch (e) { return null; }
+        }
 
-            el.navEmail.innerText = email;
-            el.welcomeName.innerText = email.split('@')[0];
-            await loadDashboardData(email);
-        });
+        function triggerDashboardView() {
+            if (el.skeleton) el.skeleton.classList.add('hidden');
+            if (el.dashboard) el.dashboard.classList.remove('hidden');
+        }
 
-        // 🔥 FIX 1: Deduplicate payments using Set
-        async function loadDashboardData(email) {
-            try {
-                // Show debug panel after 3 seconds if still loading (for debugging)
-                setTimeout(() => {
-                    if (!el.dashboard.classList.contains('hidden')) return;
-                    el.debugPanel.classList.remove('hidden');
-                }, 3000);
-                
-                // 🔥 FIX 1: Use Set to prevent duplicate processing
-                const processedIds = new Set();
-                const paymentsMap = new Map(); // id -> payment object
-                
-                // Query both fields but deduplicate by ID
-                const [snap1, snap2] = await Promise.all([
-                    db.ref('payment_requests').orderByChild('email').equalTo(email).once('value'),
-                    db.ref('payment_requests').orderByChild('userEmail').equalTo(email).once('value')
-                ]);
-                
-                // Process first snapshot
-                snap1.forEach(child => {
-                    const id = child.key;
-                    if (!processedIds.has(id)) {
-                        processedIds.add(id);
-                        paymentsMap.set(id, child.val());
-                    }
-                });
-                
-                // Process second snapshot
-                snap2.forEach(child => {
-                    const id = child.key;
-                    if (!processedIds.has(id)) {
-                        processedIds.add(id);
-                        paymentsMap.set(id, child.val());
-                    }
-                });
-                
-                debugData.paymentsFound = paymentsMap.size;
-                
-                if (paymentsMap.size === 0) {
-                    el.courseName.innerText = 'No active enrollment found';
-                    el.courseBadge.innerText = 'Not Enrolled';
-                    showDashboard();
-                    return;
-                }
-                
-                // 🔥 FIX 2: Get latest payment with proper timestamp validation
-                let latestPayment = null;
-                let latestTimestamp = -1;
-                
-                for (const [id, payment] of paymentsMap) {
-                    // Ensure timestamp is a valid number
-                    let timestamp = payment.createdAt || payment.timestamp || payment.paymentDate;
-                    
-                    // 🔥 FIX 2: Validate timestamp - if invalid or missing, use a fallback
-                    if (!timestamp || isNaN(Number(timestamp))) {
-                        console.warn(`Payment ${id} has invalid timestamp, using current time`);
-                        timestamp = Date.now();
-                    } else {
-                        timestamp = Number(timestamp);
-                    }
-                    
-                    if (timestamp > latestTimestamp) {
-                        latestTimestamp = timestamp;
-                        latestPayment = { id, ...payment };
-                    }
-                }
-                
-                debugData.latestPayment = {
-                    id: latestPayment.id,
-                    status: latestPayment.status,
-                    timestamp: latestTimestamp
-                };
-                
-                const courseId = latestPayment.courseId;
-                const status = latestPayment.status;
-                
-                // Validate courseId exists
-                if (!courseId) {
-                    console.error('Payment missing courseId:', latestPayment);
-                    el.courseName.innerText = 'Course ID missing in payment record';
-                    el.courseBadge.innerText = 'Configuration Error';
-                    showDashboard();
-                    return;
-                }
-                
-                // Load course
-                const courseSnap = await db.ref(`courses/${courseId}`).once('value');
-                const course = courseSnap.val();
-                
-                debugData.courseFound = !!course;
-                debugData.courseData = course ? {
-                    title: course.title,
-                    category: course.category,
-                    hasLink: !!(course.learningLink || course.link)
-                } : null;
-                
-                if (course) {
-                    el.courseName.innerText = course.title || course.courseName || course.name || 'Course';
-                    el.courseBadge.innerText = course.category || course.courseCategory || course.level || 'Course';
-                    const learnLink = course.learningLink || course.link || course.url || `course-access.html?id=${courseId}`;
-                    el.startBtn.href = learnLink;
+        // ============ AUTH OBSERVER ============
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUserEmail = user.email;
+                currentUserUID = user.uid;
+                localStorage.setItem('ss_user_session', JSON.stringify({ uid: user.uid, email: user.email }));
+                initializeDashboard();
+            } else {
+                const sessionEmail = getSessionEmail();
+                const sessionUID = getSessionUID();
+                if (sessionEmail) {
+                    currentUserEmail = sessionEmail;
+                    currentUserUID = sessionUID;
+                    initializeDashboard();
                 } else {
-                    el.courseName.innerText = 'Course not found in database';
-                    el.courseBadge.innerText = 'Missing';
-                }
-                
-                // Handle status
-                const normalizedStatus = String(status).toLowerCase();
-                
-                if (normalizedStatus === 'approved') {
-                    el.approvedBadge.classList.remove('hidden');
-                    el.pendingBadge.classList.add('hidden');
-                    el.expiredBadge.classList.add('hidden');
-                    el.lockedMsg.classList.add('hidden');
-                    el.startBtn.classList.remove('hidden');
-                    await setupAffiliate(email, courseId);
-                } else if (normalizedStatus === 'expired' || normalizedStatus === 'cancelled') {
-                    el.expiredBadge.classList.remove('hidden');
-                    el.pendingBadge.classList.add('hidden');
-                    el.approvedBadge.classList.add('hidden');
-                    el.lockedMsg.classList.remove('hidden');
-                    el.startBtn.classList.add('hidden');
-                    el.affiliateLocked.classList.remove('hidden');
-                    el.affiliateUnlocked.classList.add('hidden');
-                } else {
-                    // pending or any other status
-                    el.pendingBadge.classList.remove('hidden');
-                    el.approvedBadge.classList.add('hidden');
-                    el.expiredBadge.classList.add('hidden');
-                    el.lockedMsg.classList.remove('hidden');
-                    el.startBtn.classList.add('hidden');
-                    el.affiliateLocked.classList.remove('hidden');
-                    el.affiliateUnlocked.classList.add('hidden');
-                }
-                
-                showDashboard();
-                
-            } catch (err) {
-                console.error('Dashboard Error:', err);
-                debugData.error = err.message;
-                showToast('Error loading dashboard: ' + err.message, true);
-                showDashboard();
-            }
-        }
-
-        // 🔥 FIX 3: Race condition proof affiliate code generation
-        async function setupAffiliate(email, courseId) {
-            try {
-                // First check if affiliate already exists
-                const existingSnap = await db.ref('affiliates').orderByChild('email').equalTo(email).once('value');
-                let existingCode = null;
-                existingSnap.forEach(child => { existingCode = child.key; });
-                
-                if (existingCode) {
-                    el.promoCode.innerText = existingCode;
-                    el.referralLink.value = `https://infoskillssyndicate.github.io/Skills-syndicate-/payment.html?course=${courseId}&ref=${existingCode}`;
-                    el.affiliateLocked.classList.add('hidden');
-                    el.affiliateUnlocked.classList.remove('hidden');
-                    return;
-                }
-                
-                const base = email.split('@')[0].replace(/[^a-z0-9]/gi, '').substring(0, 6).toUpperCase();
-                
-                // 🔥 FIX 3: Use Firebase push key for guaranteed uniqueness
-                // Method 1: Use timestamp-based unique code
-                const timestampCode = `${base}${Date.now().toString().slice(-6)}`;
-                
-                // Also try with random as fallback
-                let promo = timestampCode;
-                let isUnique = false;
-                let attempts = 0;
-                
-                while (!isUnique && attempts < 5) {
-                    const checkSnap = await db.ref(`affiliates/${promo}`).once('value');
-                    if (!checkSnap.exists()) {
-                        isUnique = true;
-                    } else {
-                        // Conflict - add random suffix
-                        promo = `${base}${Math.floor(Math.random() * 9999)}`;
-                    }
-                    attempts++;
-                }
-                
-                // 🔥 FIX 3: Use transaction to prevent race condition
-                const affiliateRef = db.ref(`affiliates/${promo}`);
-                
-                await affiliateRef.set({
-                    name: base || 'Student',
-                    email: email,
-                    discountRate: 5,
-                    isActive: true,
-                    courseId: courseId,
-                    createdAt: firebase.database.ServerValue.TIMESTAMP || Date.now(),
-                    uniqueId: `${promo}_${Date.now()}`
-                });
-                
-                el.promoCode.innerText = promo;
-                el.referralLink.value = `https://infoskillssyndicate.github.io/Skills-syndicate-/payment.html?course=${courseId}&ref=${promo}`;
-                el.affiliateLocked.classList.add('hidden');
-                el.affiliateUnlocked.classList.remove('hidden');
-                
-                debugData.affiliateCreated = promo;
-                
-            } catch (err) {
-                console.error('Affiliate setup error:', err);
-                debugData.affiliateError = err.message;
-                // Don't block dashboard if affiliate fails
-                el.affiliateLocked.classList.remove('hidden');
-                el.affiliateUnlocked.classList.add('hidden');
-            }
-        }
-
-        function showDashboard() {
-            el.skeleton.classList.add('hidden');
-            el.dashboard.classList.remove('hidden');
-            
-            // Log debug info to console
-            console.log('Dashboard Debug Info:', debugData);
-        }
-
-        // Copy debug info to clipboard (for support)
-        function copyDebugInfo() {
-            const info = JSON.stringify(debugData, null, 2);
-            copyToClipboard(info);
-            showToast('Debug info copied to clipboard');
-        }
-
-        function logoutEngine() {
-            auth.signOut()
-                .finally(() => {
                     localStorage.removeItem('ss_user_session');
                     window.location.href = 'index.html';
-                });
-        }
-        
-        // Show debug panel on triple-click (hidden feature for support)
-        let clickCount = 0;
-        document.body.addEventListener('click', () => {
-            clickCount++;
-            setTimeout(() => { clickCount = 0; }, 1000);
-            if (clickCount === 3) {
-                el.debugPanel.classList.toggle('hidden');
-                clickCount = 0;
+                }
             }
         });
+
+        // ============ INITIALIZE DASHBOARD ============
+        async function initializeDashboard() {
+            el.navEmail.innerText = currentUserEmail;
+            el.welcomeName.innerText = currentUserEmail.split('@')[0];
+
+            // Step 1: Check user purchase status
+            await checkUserPurchaseStatus();
+            
+            // Step 2: Load all sections
+            loadAnnouncements();
+            listenToUserCourses();
+            loadProgressAndCertificates();
+            loadGlobalLeaderboard();
+            
+            // Step 3: Load affiliate data (only if purchased)
+            if (hasUserPurchased) {
+                unlockAffiliateFeatures();
+            } else {
+                lockAffiliateFeatures();
+            }
+        }
+
+        // ============ CHECK PURCHASE STATUS ============
+        async function checkUserPurchaseStatus() {
+            try {
+                // Check user profile
+                const userSnap = await db.ref(`users/${currentUserUID}`).once('value');
+                const userData = userSnap.val() || {};
+                
+                // Check if hasPurchased flag exists
+                if (userData.hasPurchased === true) {
+                    hasUserPurchased = true;
+                } else {
+                    // Fallback: Check payment_requests for approved payments
+                    const paymentSnap = await db.ref('payment_requests')
+                        .orderByChild('userEmail')
+                        .equalTo(currentUserEmail)
+                        .once('value');
+                    
+                    if (paymentSnap.exists()) {
+                        let approvedCount = 0;
+                        paymentSnap.forEach((child) => {
+                            if (child.val().status === 'approved') approvedCount++;
+                        });
+                        
+                        if (approvedCount > 0) {
+                            hasUserPurchased = true;
+                            // Update user profile
+                            await db.ref(`users/${currentUserUID}`).update({
+                                hasPurchased: true,
+                                purchasedCourses: approvedCount
+                            });
+                        }
+                    }
+                }
+
+                // Count purchased courses
+                const paymentSnap = await db.ref('payment_requests')
+                    .orderByChild('userEmail')
+                    .equalTo(currentUserEmail)
+                    .once('value');
+                
+                let purchasedCount = 0;
+                if (paymentSnap.exists()) {
+                    paymentSnap.forEach((child) => {
+                        if (child.val().status === 'approved') purchasedCount++;
+                    });
+                }
+                el.purchasedCount.innerText = purchasedCount;
+
+                // Update affiliate status
+                if (hasUserPurchased) {
+                    el.affiliateStatusText.innerText = 'Active';
+                    el.affiliateStatusBadge.className = 'bg-emerald-500 text-[8px] font-black px-2 py-0.5 rounded';
+                    el.affiliateStatusBadge.innerText = 'AFFILIATE ACTIVE';
+                    el.navAffiliateBadge.innerText = 'AFFILIATE PARTNER';
+                } else {
+                    el.affiliateStatusText.innerText = 'Locked';
+                    el.affiliateStatusBadge.className = 'bg-amber-500 text-[8px] font-black px-2 py-0.5 rounded';
+                    el.affiliateStatusBadge.innerText = 'AFFILIATE LOCKED';
+                    el.navAffiliateBadge.innerText = 'STUDENT';
+                }
+            } catch (error) {
+                console.error("Error checking purchase status:", error);
+            }
+        }
+
+        // ============ LOCK/UNLOCK AFFILIATE FEATURES ============
+        function lockAffiliateFeatures() {
+            // Show overlay on earnings card
+            if (el.affiliateLockOverlay) el.affiliateLockOverlay.classList.remove('hidden');
+            if (el.affiliateContent) el.affiliateContent.classList.add('blur-locked');
+            
+            // Hide referral section
+            const referralSection = document.getElementById('referralSection');
+            if (referralSection) {
+                referralSection.innerHTML = `
+                    <div class="text-center py-4">
+                        <i class="fas fa-lock text-3xl text-slate-300 mb-2 block"></i>
+                        <p class="text-xs text-slate-500 font-medium">Purchase a course to unlock</p>
+                        <p class="text-[10px] text-slate-400 mt-1">Affiliate features available after first purchase</p>
+                    </div>
+                `;
+            }
+            
+            el.statClicks.innerText = '🔒';
+            el.statSignups.innerText = '🔒';
+            el.statSales.innerText = '🔒';
+            el.statEarnings.innerText = '🔒';
+        }
+
+        function unlockAffiliateFeatures() {
+            if (el.affiliateLockOverlay) el.affiliateLockOverlay.classList.add('hidden');
+            if (el.affiliateContent) el.affiliateContent.classList.remove('blur-locked');
+            listenToAffiliateProfile();
+        }
+
+        // ============ SECTION 9: ANNOUNCEMENTS ============
+        function loadAnnouncements() {
+            db.ref('announcements').once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    let announcements = [];
+                    snapshot.forEach((child) => {
+                        announcements.push(child.val().title || child.val().message);
+                    });
+                    
+                    if (announcements.length > 0) {
+                        el.announcementsMarquee.innerText = announcements.join('  •  ');
+                    } else {
+                        el.announcementsMarquee.innerText = '📢 Welcome to Skills Syndicate! Start learning today.';
+                    }
+                } else {
+                    el.announcementsMarquee.innerText = '📢 Welcome to Skills Syndicate! Browse courses and start learning.';
+                }
+            });
+        }
+
+        // ============ SECTION 2: MY LEARNING VAULT ============
+        function listenToUserCourses() {
+            const listener = db.ref('payment_requests')
+                .orderByChild('userEmail')
+                .equalTo(currentUserEmail)
+                .on('value', async (snapshot) => {
+                    if (!snapshot.exists()) {
+                        el.coursesContainer.innerHTML = `
+                            <div class="text-center py-6 border border-dashed border-slate-200 rounded-xl">
+                                <i class="fas fa-folder-open text-slate-300 text-2xl mb-2 block"></i>
+                                <p class="text-sm font-bold text-slate-700">No Courses Yet</p>
+                                <p class="text-xs text-slate-400 mt-1">Purchase a course to start learning</p>
+                            </div>
+                        `;
+                        return;
+                    }
+
+                    let recordsList = [];
+                    snapshot.forEach((child) => {
+                        recordsList.push({ key: child.key, ...child.val() });
+                    });
+
+                    let finalHTML = "";
+                    let approvedCourses = [];
+
+                    for (let payment of recordsList) {
+                        const courseId = payment.courseId || "unknown";
+                        const status = payment.status || "pending";
+
+                        const specSnap = await db.ref(`courses/${courseId}`).once('value');
+                        const spec = specSnap.val() || {};
+
+                        const title = spec.title || `Course (${courseId})`;
+                        const category = spec.category || "Premium Blueprint";
+                        const learningLink = spec.learningLink || spec.link || `course-access.html?id=${courseId}`;
+
+                        if (status === 'approved') {
+                            approvedCourses.push({ title, category, learningLink, courseId });
+                            finalHTML += `
+                                <div class="border border-slate-100 bg-slate-50/50 p-4 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 stat-card">
+                                    <div>
+                                        <span class="text-[9px] font-black tracking-widest text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded uppercase">${category}</span>
+                                        <h4 class="text-base font-bold text-slate-900 mt-1">${title}</h4>
+                                        <p class="text-xs text-emerald-600 font-medium mt-0.5"><i class="fas fa-check-circle"></i> Access Granted</p>
+                                    </div>
+                                    <a href="${learningLink}" class="w-full md:w-auto text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-sm cursor-pointer inline-block">
+                                        <i class="fas fa-play mr-1"></i> Start Learning
+                                    </a>
+                                </div>
+                            `;
+                        } else {
+                            finalHTML += `
+                                <div class="border border-dashed border-amber-200 bg-amber-50/30 p-4 rounded-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                                    <div>
+                                        <span class="text-[9px] font-black tracking-widest text-amber-700 bg-amber-100 px-2 py-0.5 rounded uppercase">${category}</span>
+                                        <h4 class="text-base font-bold text-slate-400 mt-1">${title}</h4>
+                                        <p class="text-xs text-amber-600 font-medium mt-0.5"><i class="fas fa-clock"></i> Pending Verification</p>
+                                    </div>
+                                    <span class="w-full md:w-auto text-center text-slate-400 bg-slate-100 text-xs font-bold px-4 py-2.5 rounded-xl border border-slate-200">
+                                        <i class="fas fa-lock mr-1"></i> Awaiting Approval
+                                    </span>
+                                </div>
+                            `;
+                        }
+                    }
+
+                    el.coursesContainer.innerHTML = finalHTML;
+                    triggerDashboardView();
+                }, (err) => {
+                    console.error("Courses error:", err);
+                    el.coursesContainer.innerHTML = '<div class="text-center py-4 text-red-500">Error loading courses</div>';
+                });
+            
+            activeListeners.push({ ref: 'payment_requests/userEmail', listener });
+        }
+
+        // ============ SECTION 3 & 4: PROGRESS & CERTIFICATES ============
+        function loadProgressAndCertificates() {
+            db.ref('payment_requests')
+                .orderByChild('userEmail')
+                .equalTo(currentUserEmail)
+                .once('value', async (snapshot) => {
+                    let approvedCourses = [];
+                    
+                    if (snapshot.exists()) {
+                        snapshot.forEach((child) => {
+                            const payment = child.val();
+                            if (payment.status === 'approved') {
+                                approvedCourses.push(payment);
+                            }
+                        });
+                    }
+
+                    if (approvedCourses.length === 0) {
+                        el.progressContainer.innerHTML = '<div class="text-center py-4 text-slate-400 text-sm">Complete courses to see progress</div>';
+                        el.certificatesContainer.innerHTML = '<div class="text-center py-4 text-slate-400 text-sm">Complete courses to unlock certificates</div>';
+                        return;
+                    }
+
+                    // Progress bars
+                    let progressHTML = '';
+                    for (let payment of approvedCourses) {
+                        const courseSnap = await db.ref(`courses/${payment.courseId}`).once('value');
+                        const course = courseSnap.val() || {};
+                        const title = course.title || 'Course';
+                        const progress = Math.floor(Math.random() * 60) + 10; // Placeholder - real progress tracking needed
+                        
+                        progressHTML += `
+                            <div class="space-y-1">
+                                <div class="flex justify-between text-xs">
+                                    <span class="font-bold text-slate-700">${title}</span>
+                                    <span class="text-emerald-600 font-bold">${progress}%</span>
+                                </div>
+                                <div class="w-full bg-slate-200 rounded-full h-2">
+                                    <div class="bg-emerald-500 h-2 rounded-full" style="width: ${progress}%"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    el.progressContainer.innerHTML = progressHTML;
+
+                    // Certificates
+                    let certHTML = '';
+                    for (let payment of approvedCourses) {
+                        const courseSnap = await db.ref(`courses/${payment.courseId}`).once('value');
+                        const course = courseSnap.val() || {};
+                        const title = course.title || 'Course';
+                        const progress = Math.floor(Math.random() * 60) + 10;
+                        
+                        if (progress >= 100) {
+                            certHTML += `
+                                <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl">
+                                    <i class="fas fa-medal text-emerald-600 text-xl"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-emerald-700">${title}</p>
+                                        <p class="text-[10px] text-emerald-600">Certificate Earned ✅</p>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            certHTML += `
+                                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl opacity-60">
+                                    <i class="fas fa-lock text-slate-400 text-xl"></i>
+                                    <div>
+                                        <p class="text-xs font-bold text-slate-500">${title}</p>
+                                        <p class="text-[10px] text-slate-400">Complete course to unlock</p>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }
+                    el.certificatesContainer.innerHTML = certHTML || '<div class="text-center py-4 text-slate-400 text-sm">Complete courses to unlock certificates</div>';
+                });
+        }
+
+        // ============ SECTION 5 & 6: AFFILIATE EARNINGS & REFERRAL ============
+        function listenToAffiliateProfile() {
+            const listener = db.ref('affiliates')
+                .orderByChild('email')
+                .equalTo(currentUserEmail)
+                .on('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        snapshot.forEach((child) => {
+                            bindLiveAffiliateMetrics(child.key, child.val());
+                        });
+                    } else if (hasUserPurchased) {
+                        // Create affiliate profile only if user has purchased
+                        createAffiliateProfile();
+                    }
+                }, (err) => {
+                    console.error("Affiliate listener error:", err);
+                });
+            
+            activeListeners.push({ ref: 'affiliates/email', listener });
+        }
+
+        function createAffiliateProfile() {
+            if (!hasUserPurchased) return;
+            
+            const baseCode = currentUserEmail.split('@')[0].replace(/[^a-z0-9]/gi, '').substring(0, 6).toUpperCase();
+            const finalPromo = `${baseCode}${Math.floor(Math.random() * 900 + 100)}`;
+            
+            db.ref(`affiliates/${finalPromo}`).set({
+                name: baseCode || 'SyndicatePartner',
+                email: currentUserEmail,
+                uid: currentUserUID,
+                clicks: 0,
+                signups: 0,
+                sales: 0,
+                earnings: 0,
+                createdAt: Date.now()
+            }).then(() => {
+                console.log("✅ Affiliate profile created:", finalPromo);
+            }).catch(err => {
+                console.error("❌ Affiliate creation error:", err);
+            });
+        }
+
+        function bindLiveAffiliateMetrics(promoCode, data) {
+            currentPromoCode = promoCode;
+            el.promoCode.innerText = promoCode;
+            el.referralLink.value = `${window.location.origin}/index.html?ref=${promoCode}`;
+            
+            el.statClicks.innerText = data.clicks || 0;
+            el.statSignups.innerText = data.signups || 0;
+            el.statSales.innerText = data.sales || 0;
+            el.statEarnings.innerText = data.earnings || 0;
+            el.monthlyEarning.innerText = `Total Performance: ₹${data.earnings || 0}`;
+
+            renderPerformanceChart(data.earnings || 0);
+            syncReferralHistoryLogs(promoCode);
+        }
+
+        // ============ SECTION 7: REFERRAL HISTORY ============
+        function syncReferralHistoryLogs(promoCode) {
+            const listener = db.ref('users')
+                .orderByChild('referredBy')
+                .equalTo(promoCode)
+                .on('value', (snapshot) => {
+                    let historicalRows = [];
+                    snapshot.forEach((child) => {
+                        const u = child.val();
+                        historicalRows.push({
+                            name: u.name || (u.email ? u.email.split('@')[0] : 'User'),
+                            purchased: u.hasPurchased || false
+                        });
+                    });
+
+                    if (historicalRows.length === 0) {
+                        el.referralHistory.innerHTML = '<div class="text-xs text-slate-400 text-center py-4">No referrals yet. Share your link to earn!</div>';
+                        return;
+                    }
+
+                    el.referralHistory.innerHTML = historicalRows.map(row => `
+                        <div class="flex justify-between items-center p-2 border-b border-slate-100 text-xs">
+                            <span class="text-slate-700 font-medium">
+                                <i class="fas fa-user text-[10px] mr-1 text-slate-400"></i> ${row.name}
+                            </span>
+                            <span class="${row.purchased ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'} px-2 py-0.5 rounded text-[10px] font-bold">
+                                ${row.purchased ? 'Purchased 💰' : 'Joined'}
+                            </span>
+                        </div>
+                    `).join('');
+                });
+            
+            activeListeners.push({ ref: 'users/referredBy', listener });
+        }
+
+        // ============ SECTION 8: LEADERBOARD ============
+        function loadGlobalLeaderboard() {
+            const listener = db.ref('affiliates')
+                .orderByChild('earnings')
+                .limitToLast(5)
+                .on('value', (snapshot) => {
+                    let items = [];
+                    snapshot.forEach((child) => {
+                        const d = child.val();
+                        items.push({
+                            name: d.name || (d.email ? d.email.split('@')[0] : 'User'),
+                            earnings: d.earnings || 0,
+                            sales: d.sales || 0
+                        });
+                    });
+                    items.reverse();
+
+                    if (items.length === 0) {
+                        el.leaderboardList.innerHTML = '<div class="text-xs text-slate-400 text-center py-2">No leaders yet</div>';
+                        return;
+                    }
+
+                    const medals = ['🥇', '🥈', '🥉', '4️⃣', '5️⃣'];
+                    el.leaderboardList.innerHTML = items.map((leader, idx) => `
+                        <div class="flex justify-between items-center p-2 rounded-lg border border-slate-100 text-xs bg-slate-50/50">
+                            <span class="font-bold text-slate-700">${medals[idx] || ''} ${leader.name}</span>
+                            <span class="font-black text-emerald-600">₹${leader.earnings} <span class="text-[10px] text-slate-400 font-normal">(${leader.sales})</span></span>
+                        </div>
+                    `).join('');
+                });
+            
+            activeListeners.push({ ref: 'affiliates/earnings/leaderboard', listener });
+        }
+
+        // ============ CHART ============
+        function renderPerformanceChart(earnings) {
+            const ctx = document.getElementById('earningsChart')?.getContext('2d');
+            if (!ctx) return;
+            if (earningsChart) earningsChart.destroy();
+
+            earningsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['W1', 'W2', 'W3', 'W4'],
+                    datasets: [{
+                        data: [
+                            Math.floor(earnings * 0.15),
+                            Math.floor(earnings * 0.45),
+                            Math.floor(earnings * 0.75),
+                            earnings
+                        ],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        // ============ SHARE FUNCTIONS ============
+        window.copyLink = function() {
+            if (!el.referralLink.value || !hasUserPurchased) {
+                showToast('🔒 Purchase a course to unlock sharing!', true);
+                return;
+            }
+            navigator.clipboard.writeText(el.referralLink.value).then(() => {
+                showToast('✅ Link copied successfully!');
+            }).catch(() => showToast('Copy failed', true));
+        };
+
+        window.shareWhatsApp = function() {
+            if (!hasUserPurchased) {
+                showToast('🔒 Purchase a course to unlock sharing!', true);
+                return;
+            }
+            const text = `Join me on Skills Syndicate! Use my promo code: ${currentPromoCode}\n${el.referralLink.value}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        };
+
+        window.shareTelegram = function() {
+            if (!hasUserPurchased) {
+                showToast('🔒 Purchase a course to unlock sharing!', true);
+                return;
+            }
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(el.referralLink.value)}&text=${encodeURIComponent('Join Skills Syndicate! Use code: ' + currentPromoCode)}`, '_blank');
+        };
+
+        // ============ LOGOUT ============
+        window.logoutEngine = function() {
+            // Remove all Firebase listeners
+            activeListeners.forEach(({ ref, listener }) => {
+                db.ref(ref).off('value', listener);
+            });
+            
+            auth.signOut().finally(() => {
+                localStorage.removeItem('ss_user_session');
+                window.location.href = 'index.html';
+            });
+        };
     </script>
 </body>
 </html>
